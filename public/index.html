@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spek | Soluciones Industriales</title>
+    <link rel="icon" type="image/png" href="assets/spek_logo_white.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                        oswald: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        spek: {
+                            black: '#0a0a0a',
+                            dark: '#121212',
+                            gray: '#1E1E1E',
+                            accent: '#FF4D00', // Industrial Orange
+                            light: '#E5E5E5',
+                            copper: '#c06e7a',
+                            offwhite: '#e6e2e8'
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'scroll': 'scroll 60s linear infinite',
+                        'scroll-reverse': 'scrollReverse 40s linear infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        scrollReverse: {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        },
+                        revealUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px) scale(0.95)', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)', filter: 'blur(0)' }
+                        },
+                        letterSlide: {
+                            '0%': { transform: 'translateY(110%)' },
+                            '100%': { transform: 'translateY(0)' }
+                        },
+                        clipReveal: {
+                            '0%': { clipPath: 'inset(0 0 100% 0)' },
+                            '100%': { clipPath: 'inset(0 0 0 0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-main: #050505;
+            --bg-secondary: #0a0a0a;
+            --bg-card: #121212;
+            --text-main: #ffffff;
+            --text-secondary: #9ca3af; /* gray-400 */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --overlay-color: rgba(0, 0, 0, 0.4);
+            --nav-bg: rgba(0,0,0,0.3);
+            --card-hover-shadow: rgba(0,0,0,0.5);
+            --mobile-menu-bg: #0a0a0a;
+        }
+
+        /* LIGHT MODE OVERRIDES */
+        .light-mode {
+            --bg-main: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-main: #111827; /* gray-900 */
+            --text-secondary: #4b5563; /* gray-600 */
+            --border-color: rgba(0, 0, 0, 0.1);
+            --overlay-color: rgba(255, 255, 255, 0.6);
+            --nav-bg: rgba(255,255,255,0.8);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+            --mobile-menu-bg: #ffffff;
+        }
+
+        /* --- General Setup --- */
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            font-family: sans-serif; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* --- Light Mode Specific CSS Overrides --- */
+        .light-mode .text-white { color: var(--text-main) !important; }
+        .light-mode .text-gray-200 { color: #374151 !important; }
+        .light-mode .text-gray-300 { color: #4b5563 !important; }
+        .light-mode .text-gray-400 { color: var(--text-secondary) !important; }
+        .light-mode .text-spek-offwhite { color: #1f2937 !important; }
+        
+        .light-mode .bg-black { background-color: var(--bg-main) !important; }
+        .light-mode .bg-black/30 { background-color: var(--nav-bg) !important; }
+        .light-mode .bg-black/40 { background-color: var(--overlay-color) !important; }
+        .light-mode .bg-black/50 { background-color: #f3f4f6 !important; }
+        .light-mode .bg-\[\#050505\] { background-color: var(--bg-main) !important; }
+        .light-mode .bg-\[\#080808\] { background-color: var(--bg-secondary) !important; }
+        .light-mode .bg-\[\#0a0a0a\] { background-color: var(--bg-card) !important; }
+        .light-mode .bg-\[\#111\] { background-color: #f3f4f6 !important; }
+        .light-mode .bg-\[\#121212\] { background-color: var(--bg-card) !important; }
+        .light-mode .bg-spek-black { background-color: var(--bg-secondary) !important; }
+
+        .light-mode .border-white/5 { border-color: var(--border-color) !important; }
+        .light-mode .border-white/10 { border-color: var(--border-color) !important; }
+        .light-mode .border-white/20 { border-color: var(--border-color) !important; }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            background-color: var(--mobile-menu-bg);
+            transition: transform 0.3s ease-in-out, opacity 0.3s;
+        }
+
+        /* --- Modern Mobile Menu Animations --- */
+        #mobile-menu {
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* Custom ease-out */
+        }
+        
+        .mobile-link-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* Trigger animations when menu is open (not translate-x-full) */
+        #mobile-menu:not(.translate-x-full) .mobile-link-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger Delays */
+        #mobile-menu:not(.translate-x-full) .mobile-link-container:nth-child(1) { transition-delay: 0.1s; }
+        #mobile-menu:not(.translate-x-full) .mobile-link-container:nth-child(2) { transition-delay: 0.15s; }
+        #mobile-menu:not(.translate-x-full) .mobile-link-container:nth-child(3) { transition-delay: 0.2s; }
+        #mobile-menu:not(.translate-x-full) .mobile-link-container:nth-child(4) { transition-delay: 0.25s; }
+        #mobile-menu:not(.translate-x-full) .mobile-link-container:nth-child(5) { transition-delay: 0.3s; }
+        #mobile-menu:not(.translate-x-full) .mobile-footer { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        
+        .mobile-footer {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* Specific Element Fixes */
+        .light-mode .testimonial-card {
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-color: var(--border-color);
+        }
+        .light-mode .flashlight-card {
+            background: #ffffff;
+            border-color: var(--border-color);
+        }
+        .light-mode .flashlight-inner {
+            background: #ffffff;
+            color: var(--text-main);
+        }
+        .light-mode .btn-beam {
+            background: #e5e7eb;
+            color: #111;
+        }
+        .light-mode .btn-beam::after {
+            background: #f3f4f6;
+        }
+        .light-mode .pill-cta {
+             border-color: rgba(0,0,0,0.2);
+             color: #111;
+        }
+        .light-mode .noise-overlay {
+            opacity: 0.03;
+            filter: invert(1);
+        }
+
+        /* --- Custom Hero Styles --- */
+        .noise-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .vignette {
+            background: transparent;
+        }
+
+        .text-offwhite { color: #e6e2e8; }
+        
+        .hero-title-huge {
+            font-family: 'Oswald', sans-serif;
+            line-height: 0.85;
+            letter-spacing: -0.02em;
+        }
+
+        .pill-cta {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .pill-cta:hover {
+            box-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
+            border-color: #FF4D00;
+        }
+
+        /* --- Scroll Animations --- */
+        .reveal-on-scroll {
+            opacity: 0; 
+            will-change: opacity, transform, filter;
+        }
+        
+        .reveal-active {
+            animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-on-scroll { opacity: 1 !important; transform: none !important; filter: none !important; }
+        }
+
+        .stagger-1 { animation-delay: 100ms; }
+        .stagger-2 { animation-delay: 200ms; }
+        .stagger-3 { animation-delay: 300ms; }
+
+        /* --- Hero Text Animation Fixed --- */
+        .char-wrapper {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            padding-bottom: 0.1em;
+            margin-bottom: -0.1em; 
+        }
+        
+        .char-reveal {
+            display: inline-block;
+            transform: translateY(110%);
+            will-change: transform;
+        }
+
+        .hero-loaded .char-reveal {
+            animation: letterSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- Background Clip Animation --- */
+        .bg-columns {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-col {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            clip-path: inset(0 0 100% 0);
+        }
+        .light-mode .bg-col {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+        .hero-loaded .bg-col {
+            animation: clipReveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) both;
+        }
+
+        /* --- Border Beam Button --- */
+        .btn-beam {
+            position: relative;
+            background: rgba(20, 20, 20, 0.8);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .btn-beam::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(transparent, transparent, transparent, #FF4D00, transparent 20%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: spin-slow 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .btn-beam:hover::before {
+            opacity: 1;
+        }
+        .btn-beam::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            background: #121212;
+            border-radius: 9999px;
+            z-index: 0;
+        }
+        .btn-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Marquee Fade Mask --- */
+        .marquee-mask {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* --- Flashlight Cards (Enhanced Interaction) --- */
+        .flashlight-card {
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            /* FIXED: Changed from 'all' to specific properties to prevent z-index flicker */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.4s ease, 
+                        border-color 0.4s ease;
+            z-index: 1;
+            will-change: transform; /* Hint for browser optimization */
+            display: flex;
+        }
+        .flashlight-card:hover {
+            transform: translateY(-8px) scale(1.05); /* Significant Scale */
+            z-index: 20; /* Bring to front */
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8); /* Deep Shadow */
+            border-color: rgba(255, 77, 0, 0.4); /* Highlight Border */
+        }
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 255, 255, 0.06), 
+                transparent 40%
+            );
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .light-mode .flashlight-card::before {
+             background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(0, 0, 0, 0.05), 
+                transparent 40%
+            );
+        }
+        .flashlight-card::after {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 77, 0, 0.4), 
+                transparent 40%
+            );
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .flashlight-card:hover::before,
+        .flashlight-card:hover::after {
+            opacity: 1;
+        }
+        /* Light mode overrides for interaction */
+        .light-mode .flashlight-card:hover {
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .flashlight-inner {
+            flex: 1;
+            padding: 2rem;
+            background: #0f0f0f;
+            border-radius: inherit;
+            z-index: 2;
+        }
+
+        /* --- 3D Card Rotator --- */
+        .rotator-container {
+            perspective: 1000px;
+            height: 450px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .rotator-container {
+                height: 350px;
+                perspective: 600px;
+            }
+        }
+        .rotator-card {
+            position: absolute;
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 16px;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        @media (max-width: 768px) {
+            .rotator-card {
+                height: 280px;
+                max-width: 90%;
+            }
+        }
+        .light-mode .rotator-card {
+            background: #ffffff;
+            border-color: #e5e7eb;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+        .rotator-card.active {
+            transform: translateX(0) scale(1) translateZ(0);
+            z-index: 20;
+            opacity: 1;
+            border-color: #FF4D00;
+        }
+        .rotator-card.next {
+            transform: translateX(60px) scale(0.85) translateZ(-100px) rotateY(-5deg);
+            z-index: 10;
+            opacity: 0.5;
+            filter: blur(2px);
+        }
+        .rotator-card.prev {
+            transform: translateX(-60px) scale(0.85) translateZ(-100px) rotateY(5deg);
+            z-index: 10;
+            opacity: 0.5;
+            filter: blur(2px);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #121212, #0a0a0a);
+            border: 1px solid #222;
+        }
+
+        body.force-visible .reveal-on-scroll,
+        body.force-visible .char-reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            animation: none !important;
+        }
+        body.force-visible .char-wrapper {
+            overflow: visible !important;
+        }
+
+        /* Keep Cinematic Hero Dark in Light Mode */
+        .light-mode #cinematic-hero .text-white,
+        .light-mode #cinematic-hero .text-spek-offwhite {
+            color: #e6e2e8 !important;
+        }
+        .light-mode #cinematic-hero .bg-black\/40 {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+
+        /* --- Navbar Scroll Behavior --- */
+        .light-mode nav:not(.scrolled) .text-white {
+            color: #ffffff !important;
+        }
+        .light-mode nav:not(.scrolled) .text-gray-300 {
+            color: #d1d5db !important;
+        }
+        .light-mode nav:not(.scrolled) .border-white\/20 {
+             border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+        .light-mode nav:not(.scrolled) {
+             background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-spek-accent selection:text-white">
+
+    <!--Navbar -->
+    <nav id="main-nav" class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-[2px]">
+        <div class="max-w-[1400px] mx-auto px-6 h-24 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+                <img src="assets/spek_logo.png" alt="Spek Logo" class="h-8 w-auto">
+            </a>
+            
+            <!-- Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-10 text-xs font-medium tracking-widest text-gray-300 uppercase">
+                <a href="#hero" class="hover:text-spek-accent transition-colors">Inicio</a>
+                <a href="#services" class="hover:text-spek-accent transition-colors">Servicios</a>
+                <a href="#proyectos" class="hover:text-spek-accent transition-colors">Proyectos</a>
+                <a href="#" class="hover:text-spek-accent transition-colors">Recursos</a>
+                <a href="#informacion-directa" class="hover:text-spek-accent transition-colors">Contacto</a>
+            </div>
+
+            <!-- Right Side: Contact & Theme Toggle & Mobile Menu Btn -->
+            <div class="flex items-center gap-4">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="w-10 h-10 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-all group" aria-label="Toggle Theme">
+                    <i data-lucide="sun" class="w-4 h-4 hidden group-[.light-mode_&]:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block group-[.light-mode_&]:hidden"></i>
+                </button>
+
+                <a href="#informacion-directa" class="hidden md:block border border-white/20 px-5 py-2 text-xs font-medium tracking-widest text-white uppercase hover:bg-white/10 hover:border-white/40 transition-all">
+                    Contactar
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-white z-50 rounded-full border border-white/10 hover:bg-white/10 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- NEW Modern Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 z-50 bg-[#050505]/95 backdrop-blur-xl transform translate-x-full flex flex-col justify-between p-6 md:hidden overflow-hidden h-[100dvh]">
+            
+            <!-- Background Decorative Gradients -->
+            <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-spek-accent/20 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-[200px] h-[200px] bg-spek-accent/10 rounded-full blur-[80px] pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
+
+            <!-- Header inside Menu -->
+            <div class="flex justify-between items-center w-full relative z-10 pt-2">
+                <span class="text-2xl font-bold font-oswald text-white tracking-tight">MENÚ</span>
+                <button id="close-menu-btn" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white hover:bg-white/10 hover:border-spek-accent hover:rotate-90 transition-all duration-300">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Links Container -->
+            <div class="flex flex-col justify-center flex-1 gap-2 relative z-10 pl-2">
+                
+                <!-- Link 1 -->
+                <div class="mobile-link-container">
+                    <a href="#hero" class="mobile-link group block py-2">
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-xs font-mono text-spek-accent opacity-50 group-hover:opacity-100 transition-opacity">01</span>
+                            <span class="text-5xl font-oswald font-bold uppercase tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">Inicio</span>
+                        </div>
+                        <div class="h-[1px] w-0 group-hover:w-full bg-spek-accent transition-all duration-500 ease-out mt-2 opacity-50"></div>
+                    </a>
+                </div>
+
+                <!-- Link 2 -->
+                <div class="mobile-link-container">
+                    <a href="#services" class="mobile-link group block py-2">
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-xs font-mono text-spek-accent opacity-50 group-hover:opacity-100 transition-opacity">02</span>
+                            <span class="text-5xl font-oswald font-bold uppercase tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">Servicios</span>
+                        </div>
+                         <div class="h-[1px] w-0 group-hover:w-full bg-spek-accent transition-all duration-500 ease-out mt-2 opacity-50"></div>
+                    </a>
+                </div>
+
+                <!-- Link 3 -->
+                <div class="mobile-link-container">
+                    <a href="#proyectos" class="mobile-link group block py-2">
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-xs font-mono text-spek-accent opacity-50 group-hover:opacity-100 transition-opacity">03</span>
+                            <span class="text-5xl font-oswald font-bold uppercase tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">Proyectos</span>
+                        </div>
+                         <div class="h-[1px] w-0 group-hover:w-full bg-spek-accent transition-all duration-500 ease-out mt-2 opacity-50"></div>
+                    </a>
+                </div>
+
+                <!-- Link 4 -->
+                <div class="mobile-link-container">
+                    <a href="#" class="mobile-link group block py-2">
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-xs font-mono text-spek-accent opacity-50 group-hover:opacity-100 transition-opacity">04</span>
+                            <span class="text-5xl font-oswald font-bold uppercase tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">Recursos</span>
+                        </div>
+                         <div class="h-[1px] w-0 group-hover:w-full bg-spek-accent transition-all duration-500 ease-out mt-2 opacity-50"></div>
+                    </a>
+                </div>
+
+                <!-- Link 5 -->
+                <div class="mobile-link-container">
+                    <a href="#informacion-directa" class="mobile-link group block py-2">
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-xs font-mono text-spek-accent opacity-50 group-hover:opacity-100 transition-opacity">05</span>
+                            <span class="text-5xl font-oswald font-bold uppercase tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">Contacto</span>
+                        </div>
+                         <div class="h-[1px] w-0 group-hover:w-full bg-spek-accent transition-all duration-500 ease-out mt-2 opacity-50"></div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Footer inside Menu -->
+            <div class="mobile-footer relative z-10 border-t border-white/10 pt-6">
+                <div class="flex flex-col gap-4">
+                     <p class="text-gray-500 text-xs font-mono uppercase tracking-widest">Síguenos</p>
+                     <div class="flex gap-6 text-white">
+                        <a href="https://youtube.com/@spek-industrial?si=aWuGuoxtKEppkA41" class="hover:text-spek-accent transition-colors"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                        <a href="https://www.instagram.com/spekindustrial?igsh=azZiYjZqNGhlbm5q&utm_source=qr" class="hover:text-spek-accent transition-colors"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                        <a href="https://www.tiktok.com/@spekindustrial?_r=1&_t=ZS-93DV6YoT2XM" class="hover:text-spek-accent transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+                     </div>
+                     <p class="text-[10px] text-gray-600 mt-2">&copy; 2025 Spek Industries.</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cinematic Hero Section -->
+    <section id="cinematic-hero" class="relative w-full h-screen flex flex-col justify-center overflow-hidden bg-[#050505]">
+        <div class="noise-overlay"></div>
+        <div class="absolute inset-0 z-10 vignette pointer-events-none"></div>
+        <div class="absolute inset-0 bg-black/40 z-0 transition-colors duration-500"></div>
+
+        <div class="absolute inset-0 z-0">
+            <img src="assets/spek_casco.png" 
+                 alt="Cinematic Portrait" 
+                 class="w-full h-full object-cover opacity-80"
+                 style="object-position: center 20%;">
+        </div>
+
+        <div class="relative z-20 max-w-[1400px] mx-auto px-6 w-full flex flex-col h-full justify-center pt-20">
+            <div class="flex flex-col items-start mb-8 md:mb-12">
+                <h1 class="hero-title-huge text-[40px] sm:text-[50px] md:text-[70px] lg:text-[80px] font-medium uppercase animate-[revealUp_1s_ease-out_both] leading-[0.9]">
+                    <span class="block text-spek-accent">Ingeniería</span>
+                    <span class="block text-spek-offwhite text-[30px] sm:text-[40px] md:text-[60px] lg:text-[70px]">Soluciones industriales a la medida</span>
+                </h1>
+            </div>
+
+            <div class="flex mb-12 animate-[revealUp_1s_ease-out_0.3s_both]">
+                <a href="#informacion-directa" class="pill-cta flex items-center gap-3 px-8 py-3 rounded-full border border-spek-offwhite/30 text-spek-offwhite backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all group">
+                    <span class="text-sm font-medium tracking-widest uppercase">Contactar</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-spek-accent group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Info Area (Responsive Fix) -->
+        <div class="absolute bottom-0 left-0 w-full z-20 border-t border-white/10 bg-gradient-to-t from-black/40 to-transparent pb-8 pt-8">
+            <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+                <div class="hidden md:block">
+                    <span class="text-xs font-bold tracking-widest text-white uppercase">About Us</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="text-sm text-white leading-relaxed max-w-sm mx-auto md:mx-0">
+                        Transformamos necesidades operativas en soluciones industriales funcionales y confiables.
+                    </p>
+                </div>
+                <div class="flex justify-between md:justify-end items-center gap-8">
+                    <div class="hidden sm:flex flex-col items-end gap-1 text-[10px] text-white font-mono uppercase tracking-widest">
+                        <span>Ingeniería aplicada</span>
+                        <span>Fabricación industrial</span>
+                        <span>Continuidad operativa</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-white text-xs tracking-widest uppercase animate-bounce ml-auto sm:ml-0">
+                        <span>Scroll</span>
+                        <i data-lucide="arrow-down" class="w-3 h-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secondary Hero -->
+    <section class="relative min-h-[80vh] flex items-center pt-20 pb-32 overflow-hidden bg-black" id="hero">
+        <div class="bg-columns w-full h-full max-w-7xl mx-auto left-0 right-0">
+            <div class="bg-col" style="animation-delay: 0.1s"></div>
+            <div class="bg-col" style="animation-delay: 0.2s"></div>
+            <div class="bg-col" style="animation-delay: 0.3s"></div>
+            <div class="bg-col" style="animation-delay: 0.4s"></div>
+            <div class="bg-col" style="animation-delay: 0.5s"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+            <!-- TÍTULO PRINCIPAL -->
+            <h1 class="text-5xl md:text-8xl font-bold leading-none tracking-tighter mb-8 pb-2" id="hero-title">
+                INGENIERÍA<br>
+                <span class="text-gray-500">INDUSTRIAL</span><br>
+                DEL FUTURO
+            </h1>
+
+                <div class="reveal-on-scroll mb-10" style="animation-delay: 0.6s;">
+                    <h3 class="text-xl font-bold text-white mb-3">Excelencia y calidad</h3>
+                    <p class="text-base text-gray-400 max-w-lg leading-relaxed">
+                        En SPEK Industrial ofrecemos soluciones industriales integrales. Nos especializamos en la fabricación, modificación y mantenimiento de líneas de pintura industrial, además de proveer consumibles, refacciones y equipos. Complementamos nuestros servicios con pailería industrial, automatización, integración de sistemas y maquinados de precisión para cubrir las necesidades reales de cada operación.
+                    </p>
+                </div>
+
+                <div class="flex gap-4 reveal-on-scroll" style="animation-delay: 0.8s;">
+                    <a href="#contacto">
+                        <button class="btn-beam px-8 py-4 rounded-full text-white font-bold tracking-wide">
+                            <span class="btn-content">INICIAR PROYECTO</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="order-1 md:order-2 relative h-[300px] md:h-[400px] w-full reveal-on-scroll" style="animation-delay: 0.4s;">
+                <div class="absolute inset-0 bg-gradient-to-tr from-spek-accent/20 to-transparent rounded-2xl blur-3xl opacity-30"></div>
+                <img src="assets/spek_portada.jpeg" alt="Industrial Arm" class="w-full h-full object-cover rounded-2xl border border-white/10 shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Loop -->
+    <section class="py-10 border-y border-white/5 bg-black/50 overflow-hidden">
+        <div class="text-center mb-6">
+            <span class="text-sm font-bold tracking-widest text-white uppercase">Nuestros Clientes</span>
+        </div>
+        <div class="marquee-mask">
+            <div class="flex w-max animate-scroll hover:[animation-play-state:paused]">
+                <div class="flex gap-12 px-8 items-center text-gray-200 opacity-90 hover:opacity-100 transition-opacity">
+                    <!-- Logos (Content remains same) -->
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Nidec</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Magnekon</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">FORVIA</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Oldcastle Infrastructure</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">SKF</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">FOX Regional Lavabras</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">AR International</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Antares Polímeros</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">EMSA Mofles</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Schneider Electric</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Teksid</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Ensambles Hyson</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Identco</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">ISL</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">NAMM</span>
+                </div>
+                 <div class="flex gap-12 px-8 items-center text-gray-200 opacity-90 hover:opacity-100 transition-opacity">
+                    <!-- Logos Repeated -->
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Nidec</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Magnekon</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">FORVIA</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Oldcastle Infrastructure</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">SKF</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">FOX Regional Lavabras</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">AR International</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Antares Polímeros</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">EMSA Mofles</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Schneider Electric</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Teksid</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Ensambles Hyson</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">Identco</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">ISL</span>
+                    <span class="text-xl md:text-2xl font-bold font-mono whitespace-nowrap">NAMM</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="py-32 relative min-h-[80vh] flex items-center overflow-hidden bg-spek-black" id="services">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-20 text-center reveal-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Nuestros Servicios</h2>
+                <p class="text-gray-400">Soluciones integrales para la industria moderna.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-container">
+                 <!-- Card 1 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-1">
+                    <div class="flashlight-inner flex flex-col justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
+                            <i data-lucide="paint-bucket" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Diseño e implementación de líneas de pintura</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Sistemas automatizados de pintura electrostática y líquida para acabados consistentes y eficientes.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-2">
+                    <div class="flashlight-inner flex flex-col justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
+                            <i data-lucide="wrench" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Mantenimiento y modificaciones</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Optimización, reparación y adaptación de líneas existentes para mayor vida útil y rendimiento.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-3">
+                    <div class="flashlight-inner flex flex-col justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
+                            <i data-lucide="settings" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Refacciones, equipos y consumibles</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Suministro de piezas de repuesto, equipos especializados y materiales esenciales para procesos.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-1">
+                    <div class="flashlight-inner flex flex-col justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
+                            <i data-lucide="layers" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Maquila de pintura electrostática</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Aplicación de pintura electrostática como servicio externo con altos estándares de calidad.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-2">
+                    <div class="flashlight-inner flex flex-col justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
+                            <i data-lucide="hammer" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Pailería industrial</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Fabricación y ensamblaje de estructuras metálicas, tanques, ductos, tolvas y soportes a medida.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-3">
+                    <div class="flashlight-inner flex flex-col justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
+                            <i data-lucide="crosshair" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Maquinados de precisión</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Fabricación de piezas con tolerancias exactas mediante maquinado CNC y equipos especializados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADN Corporativo -->
+    <section class="py-24 bg-[#080808] border-t border-white/5 relative">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="mb-12 reveal-on-scroll">
+                <span class="text-white font-mono text-xs tracking-widest uppercase mb-2 block">Nuestra Esencia</span>
+                <h2 class="text-4xl md:text-5xl font-bold">ADN Corporativo</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden reveal-on-scroll stagger-1">
+                <!-- Misión -->
+                <div class="bg-[#121212] p-8 md:p-12 flex flex-col justify-center group hover:bg-[#151515] transition-colors relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="target" class="w-16 h-16 md:w-24 md:h-24 text-white"></i>
+                    </div>
+                    <span class="text-white font-mono text-sm tracking-widest uppercase mb-4">01. Misión</span>
+                    <h3 class="text-2xl font-bold text-white mb-4">Propósito Central</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed relative z-10">Desarrollar soluciones industriales confiables mediante ingeniería, fabricación y soporte técnico, contribuyendo a la eficiencia, seguridad y continuidad operativa de nuestros clientes.</p>
+                </div>
+                <!-- Visión -->
+                <div class="bg-[#121212] p-8 md:p-12 flex flex-col justify-center group hover:bg-[#151515] transition-colors relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="telescope" class="w-16 h-16 md:w-24 md:h-24 text-white"></i>
+                    </div>
+                    <span class="text-white font-mono text-sm tracking-widest uppercase mb-4">02. Visión</span>
+                    <h3 class="text-2xl font-bold text-white mb-4">Hacia Dónde Vamos</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed relative z-10">Ser un referente en soluciones industriales integrales, reconocidos por nuestra capacidad técnica, calidad de ejecución y compromiso con las personas.</p>
+                </div>
+                <!-- Valores -->
+                <div class="bg-[#0a0a0a] p-8 md:p-12 md:col-span-2">
+                    <span class="text-white font-mono text-sm tracking-widest uppercase mb-8 block">03. Valores</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Compromiso</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Asumimos cada proyecto con responsabilidad y seriedad, cumpliendo lo prometido.</p>
+                        </div>
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Responsabilidad</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Actuamos con conciencia técnica y operativa en cada decisión.</p>
+                        </div>
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Calidad</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Altos estándares técnicos para entregar soluciones funcionales.</p>
+                        </div>
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Seguridad</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">La integridad de las personas es prioridad permanente.</p>
+                        </div>
+                         <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Respeto</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Entorno basado en inclusión, colaboración y valor humano.</p>
+                        </div>
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Trabajo en equipo</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Colaboración y apoyo mutuo para mejores resultados.</p>
+                        </div>
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Mejora continua</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Evolución constante en procesos y soluciones.</p>
+                        </div>
+                        <div class="border-l-2 border-white/10 pl-4 py-1 hover:border-spek-accent transition-colors">
+                            <h4 class="text-white font-bold text-lg mb-2">Integridad</h4>
+                            <p class="text-gray-500 text-xs leading-relaxed">Honestidad, ética y transparencia en todas nuestras relaciones.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Convicciones -->
+                <div class="bg-[#121212] p-8 md:p-12 md:col-span-2 flex flex-col md:flex-row gap-10 items-start">
+                    <div class="md:w-1/3">
+                        <span class="text-white font-mono text-sm tracking-widest uppercase mb-4 block">04. Convicciones</span>
+                        <h3 class="text-3xl font-bold text-white mb-4">En qué creemos</h3>
+                        <p class="text-gray-400 text-sm">Nuestros principios no son negociables. Son la base sobre la cual construimos cada pieza, cada servicio y cada relación comercial.</p>
+                    </div>
+                    <div class="md:w-2/3 grid gap-4">
+                        <div class="flex items-start gap-4"><div class="min-w-[24px] pt-1"><div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i data-lucide="check" class="w-3 h-3 text-spek-accent"></i></div></div><p class="text-gray-300 text-sm">Creemos que el respeto, la seguridad y la responsabilidad son la base de cualquier operación industrial.</p></div>
+                        <div class="flex items-start gap-4"><div class="min-w-[24px] pt-1"><div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i data-lucide="check" class="w-3 h-3 text-spek-accent"></i></div></div><p class="text-gray-300 text-sm">Creemos en las personas como el principal valor de la empresa.</p></div>
+                        <div class="flex items-start gap-4"><div class="min-w-[24px] pt-1"><div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i data-lucide="check" class="w-3 h-3 text-spek-accent"></i></div></div><p class="text-gray-300 text-sm">Creemos en el trabajo bien hecho y en cumplir lo que prometemos.</p></div>
+                        <div class="flex items-start gap-4"><div class="min-w-[24px] pt-1"><div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i data-lucide="check" class="w-3 h-3 text-spek-accent"></i></div></div><p class="text-gray-300 text-sm">Creemos en la ingeniería aplicada como solución a problemas reales.</p></div>
+                        <div class="flex items-start gap-4"><div class="min-w-[24px] pt-1"><div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i data-lucide="check" class="w-3 h-3 text-spek-accent"></i></div></div><p class="text-gray-300 text-sm">Creemos en construir relaciones de largo plazo con clientes, proveedores y colaboradores.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios (Responsive Fix) -->
+    <section class="py-24 bg-[#050505] relative border-t border-white/5 overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-spek-accent/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+            <!-- Header (Mobile: Stacked, Desktop: Sticky) -->
+            <div class="lg:col-span-4 reveal-on-scroll">
+                <div class="lg:sticky lg:top-32">
+                    <span class="text-white font-mono text-xs tracking-widest uppercase mb-4 block">¿Por qué elegirnos?</span>
+                    <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">BENEFICIOS <br> <span class="text-gray-600">SPEK INDUSTRIAL</span></h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 max-w-sm">Más allá de ser proveedores, nos convertimos en aliados estratégicos comprometidos con la eficiencia y continuidad de tu operación.</p>
+                    <div class="w-16 h-1 bg-spek-accent mb-8"></div>
+                </div>
+            </div>
+            <!-- Benefits List -->
+            <div class="lg:col-span-8 space-y-4">
+                <div class="group flex flex-col md:flex-row gap-6 p-6 md:p-8 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/50 hover:bg-[#181818] transition-all duration-300 reveal-on-scroll stagger-1 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-spek-accent/0 via-spek-accent/0 to-spek-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div class="w-14 h-14 rounded-xl bg-black flex items-center justify-center border border-white/10 shrink-0 group-hover:border-spek-accent group-hover:text-spek-accent transition-colors shadow-lg"><i data-lucide="award" class="w-6 h-6"></i></div>
+                    <div><h3 class="text-xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Experiencia Industrial</h3><p class="text-gray-400 text-sm leading-relaxed">Contamos con amplia experiencia en el desarrollo, modificación y mantenimiento de soluciones industriales para distintos sectores productivos, asegurando resultados probados.</p></div>
+                </div>
+                <div class="group flex flex-col md:flex-row gap-6 p-6 md:p-8 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/50 hover:bg-[#181818] transition-all duration-300 reveal-on-scroll stagger-2 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-spek-accent/0 via-spek-accent/0 to-spek-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div class="w-14 h-14 rounded-xl bg-black flex items-center justify-center border border-white/10 shrink-0 group-hover:border-spek-accent group-hover:text-spek-accent transition-colors shadow-lg"><i data-lucide="ruler" class="w-6 h-6"></i></div>
+                    <div><h3 class="text-xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Soluciones a la Medida</h3><p class="text-gray-400 text-sm leading-relaxed">Diseñamos y adaptamos cada proyecto de acuerdo con los requerimientos técnicos y operativos específicos de tu proceso, evitando soluciones genéricas.</p></div>
+                </div>
+                 <div class="group flex flex-col md:flex-row gap-6 p-6 md:p-8 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/50 hover:bg-[#181818] transition-all duration-300 reveal-on-scroll stagger-3 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-spek-accent/0 via-spek-accent/0 to-spek-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div class="w-14 h-14 rounded-xl bg-black flex items-center justify-center border border-white/10 shrink-0 group-hover:border-spek-accent group-hover:text-spek-accent transition-colors shadow-lg"><i data-lucide="users" class="w-6 h-6"></i></div>
+                    <div><h3 class="text-xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Asesoría Técnica Especializada</h3><p class="text-gray-400 text-sm leading-relaxed">Nuestro equipo te acompaña en la selección de equipos, refacciones y soluciones que cumplan estrictamente con las especificaciones y normativas de tu operación.</p></div>
+                </div>
+                 <div class="group flex flex-col md:flex-row gap-6 p-6 md:p-8 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/50 hover:bg-[#181818] transition-all duration-300 reveal-on-scroll stagger-1 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-spek-accent/0 via-spek-accent/0 to-spek-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div class="w-14 h-14 rounded-xl bg-black flex items-center justify-center border border-white/10 shrink-0 group-hover:border-spek-accent group-hover:text-spek-accent transition-colors shadow-lg"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                    <div><h3 class="text-xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Cumplimiento en Tiempos de Entrega</h3><p class="text-gray-400 text-sm leading-relaxed">Planificamos y ejecutamos nuestros proyectos meticulosamente para ajustarnos a los tiempos y necesidades críticas de tu cronograma de producción.</p></div>
+                </div>
+                 <div class="group flex flex-col md:flex-row gap-6 p-6 md:p-8 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/50 hover:bg-[#181818] transition-all duration-300 reveal-on-scroll stagger-2 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-spek-accent/0 via-spek-accent/0 to-spek-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div class="w-14 h-14 rounded-xl bg-black flex items-center justify-center border border-white/10 shrink-0 group-hover:border-spek-accent group-hover:text-spek-accent transition-colors shadow-lg"><i data-lucide="package-check" class="w-6 h-6"></i></div>
+                    <div><h3 class="text-xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Servicios y Suministro Integral</h3><p class="text-gray-400 text-sm leading-relaxed">Ofrecemos un portafolio completo que incluye ingeniería, fabricación, mantenimiento, pailería, maquinados de precisión y suministro de refacciones y consumibles.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="py-24 bg-black relative border-t border-white/5">
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal-on-scroll">
+                <div>
+                    <span class="text-spek-accent font-mono text-xs tracking-widest uppercase mb-2 block">Infraestructura</span>
+                    <h2 class="text-4xl md:text-5xl font-bold">Tecnología que Usamos</h2>
+                </div>
+                <div class="h-px bg-white/10 flex-1 mx-8 hidden md:block"></div>
+                <p class="text-gray-400 max-w-sm text-sm text-right">Equipamiento de alto rendimiento para garantizar precisión milimétrica en cada proyecto.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
+                <!-- Tech Items (Content same) -->
+                <div class="group relative bg-[#0a0a0a] p-10 hover:bg-[#111] transition-colors reveal-on-scroll stagger-1">
+                    <div class="absolute top-6 right-6 font-mono text-xs text-white opacity-50 group-hover:opacity-100 transition-opacity">SPEC_01</div>
+                    <div class="w-12 h-12 mb-6 text-spek-offwhite group-hover:text-spek-accent transition-colors"><i data-lucide="flame" class="w-full h-full stroke-1"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Soldadura Especializada</h3><p class="text-gray-500 font-mono text-sm group-hover:text-gray-400 transition-colors">TIG, MIG y Láser</p>
+                    <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </div>
+                 <div class="group relative bg-[#0a0a0a] p-10 hover:bg-[#111] transition-colors reveal-on-scroll stagger-2">
+                    <div class="absolute top-6 right-6 font-mono text-xs text-white opacity-50 group-hover:opacity-100 transition-opacity">SPEC_02</div>
+                    <div class="w-12 h-12 mb-6 text-spek-offwhite group-hover:text-spek-accent transition-colors"><i data-lucide="disc-3" class="w-full h-full stroke-1"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Maquinado Convencional</h3><p class="text-gray-500 font-mono text-sm group-hover:text-gray-400 transition-colors">Tornos y Fresadora Convencional</p>
+                    <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </div>
+                <div class="group relative bg-[#0a0a0a] p-10 hover:bg-[#111] transition-colors reveal-on-scroll stagger-3">
+                    <div class="absolute top-6 right-6 font-mono text-xs text-white opacity-50 group-hover:opacity-100 transition-opacity">SPEC_03</div>
+                    <div class="w-12 h-12 mb-6 text-spek-offwhite group-hover:text-spek-accent transition-colors"><i data-lucide="cpu" class="w-full h-full stroke-1"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Centro de Maquinado</h3><p class="text-gray-500 font-mono text-sm group-hover:text-gray-400 transition-colors">Tecnología CNC Avanzada</p>
+                    <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </div>
+                <div class="group relative bg-[#0a0a0a] p-10 hover:bg-[#111] transition-colors reveal-on-scroll stagger-1">
+                    <div class="absolute top-6 right-6 font-mono text-xs text-white opacity-50 group-hover:opacity-100 transition-opacity">SPEC_04</div>
+                    <div class="w-12 h-12 mb-6 text-spek-offwhite group-hover:text-spek-accent transition-colors"><i data-lucide="scan-line" class="w-full h-full stroke-1"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Acabados de Precisión</h3><p class="text-gray-500 font-mono text-sm group-hover:text-gray-400 transition-colors">Rectificadora</p>
+                    <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </div>
+                 <div class="group relative bg-[#0a0a0a] p-10 hover:bg-[#111] transition-colors reveal-on-scroll stagger-2 lg:col-span-2">
+                    <div class="absolute top-6 right-6 font-mono text-xs text-white opacity-50 group-hover:opacity-100 transition-opacity">SPEC_05</div>
+                    <div class="w-12 h-12 mb-6 text-spek-offwhite group-hover:text-spek-accent transition-colors"><i data-lucide="flask-conical" class="w-full h-full stroke-1"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Procesos Químicos y Térmicos</h3><p class="text-gray-500 font-mono text-sm group-hover:text-gray-400 transition-colors max-w-md">Reactores y Tanques Mezcladores con sistemas integrados de Calentamiento y enfriamiento.</p>
+                    <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="proyectos" class="py-32 relative overflow-hidden border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1 reveal-on-scroll">
+                <span class="text-white font-mono text-sm tracking-wider mb-2 block">CASOS DE ÉXITO</span>
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">Innovación en Movimiento</h2>
+                <p class="text-gray-400 mb-8 text-lg">Explora nuestros proyectos más recientes donde la tecnología Spek ha transformado la producción.</p>
+                <div class="flex gap-4 mb-12">
+                    <button id="prev-btn" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white/10 hover:border-spek-accent flex items-center justify-center transition-all text-white"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                    <button id="next-btn" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white/10 hover:border-spek-accent flex items-center justify-center transition-all text-white"><i data-lucide="arrow-right" class="w-5 h-5"></i></button>
+                </div>
+                <div class="relative w-full h-64 rounded-xl overflow-hidden group border border-white/10 isolate cursor-pointer">
+                    <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105 z-0"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" alt="Engineers working" class="w-full h-full object-cover opacity-60 filter grayscale group-hover:grayscale-0 transition-all duration-500"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10 opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end items-start z-20">
+                        <div class="mb-auto"><span class="inline-block py-1 px-2 rounded bg-spek-accent/20 text-spek-accent text-[10px] font-mono font-bold tracking-widest uppercase mb-2 border border-spek-accent/30">Talento</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Únete a SPEK</h3>
+                        <p class="text-sm text-gray-300 mb-6 max-w-sm leading-relaxed">Forma parte de una empresa industrial enfocada en las personas, donde se reconoce la experiencia, el compromiso y el trabajo bien hecho. En SPEK Industrial impulsamos el desarrollo profesional dentro de un ambiente seguro, colaborativo y respetuoso.</p>
+                        <!-- Button Removed Here -->
+                    </div>
+                    <div class="absolute inset-0 border border-white/0 group-hover:border-spek-accent/50 rounded-xl transition-all duration-500 z-30 pointer-events-none"></div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2 reveal-on-scroll delay-200">
+                <div class="rotator-container">
+                    <div class="rotator-card active p-1"><div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative"><img src="assets/p2.png" class="w-full h-full object-cover" alt="Project 1"><div class="p-6"></div></div></div>
+
+                    <div class="rotator-card next p-1"><div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative"><img src="assets/p3.png" class="w-full h-full object-cover" alt="Project 2"><div class="p-6"><div class="text-white text-xs font-mono mb-2">AUTOMOTIVE</div><h3 class="text-xl font-bold mb-2 text-white">Línea Tesla-V</h3><p class="text-gray-400 text-sm">Ensamblaje robótico de chasis en tiempo récord.</p></div></div></div>
+                    <div class="rotator-card prev p-1"><div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative"><img src="assets/p4.png" class="w-full h-full object-cover" alt="Project 3"><div class="p-6"><div class="text-white text-xs font-mono mb-2">ENERGY</div><h3 class="text-xl font-bold mb-2 text-white">Reactor Core</h3><p class="text-gray-400 text-sm">Sistemas de enfriamiento de próxima generación.</p></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Contact Form -->
+    <section id="contacto" class="py-24 bg-[#080808] relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-white font-mono text-xs tracking-widest uppercase mb-4 block">Hablemos</span>
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Contáctanos</h2>
+                <p class="text-gray-400 text-base md:text-lg leading-relaxed max-w-3xl mx-auto">Sin importar si eres cliente, proveedor, socio o estás buscando soluciones industriales, en SPEK Industrial estamos listos para atenderte.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                <!-- Left Column: Form -->
+                <div class="bg-[#121212] border border-white/10 p-8 md:p-12 rounded-2xl shadow-2xl reveal-on-scroll stagger-1">
+                    <h3 class="text-xl font-bold text-white mb-6">Envíanos un mensaje</h3>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="name" class="text-xs font-mono text-gray-500 uppercase tracking-wider">Nombre</label>
+                                <input type="text" id="name" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-spek-accent focus:bg-white/10 transition-all" placeholder="Tu nombre completo">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="email" class="text-xs font-mono text-gray-500 uppercase tracking-wider">Correo Electrónico</label>
+                                <input type="email" id="email" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-spek-accent focus:bg-white/10 transition-all" placeholder="ejemplo @empresa.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="subject" class="text-xs font-mono text-gray-500 uppercase tracking-wider">Asunto / Interés</label>
+                            <select id="subject" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-spek-accent focus:bg-white/10 transition-all appearance-none cursor-pointer">
+                                <option value="" class="bg-[#121212]">Selecciona una opción</option>
+                                <option value="cotizacion" class="bg-[#121212]">Solicitar Cotización</option>
+                                <option value="soporte" class="bg-[#121212]">Soporte Técnico</option>
+                                <option value="proveedores" class="bg-[#121212]">Proveedores</option>
+                                <option value="otro" class="bg-[#121212]">Otro</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="message" class="text-xs font-mono text-gray-500 uppercase tracking-wider">Mensaje</label>
+                            <textarea id="message" rows="5" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-spek-accent focus:bg-white/10 transition-all resize-none" placeholder="Cuéntanos más sobre tu proyecto o necesidad..."></textarea>
+                        </div>
+                        <p class="text-center text-sm text-gray-400 mb-4">El formulario está temporalmente desactivado. Por favor, contáctanos directamente a través de la información de abajo.</p>
+                        <button type="submit" disabled class="w-full bg-gray-600 text-gray-400 font-bold tracking-wide py-4 rounded-lg flex items-center justify-center gap-2 cursor-not-allowed">
+                            <span>ENVIAR MENSAJE</span>
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Column: Direct Contact Info -->
+                <div id="informacion-directa" class="space-y-8 reveal-on-scroll stagger-2">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Información Directa</h3>
+                        <p class="text-gray-400 text-sm mb-8">Comunícate directamente con nuestros líderes de proyecto para atención personalizada.</p>
+                    </div>
+
+                    <!-- Contact Card 1: Víctor Galván -->
+                    <div class="group bg-[#121212] border border-white/10 p-8 rounded-2xl hover:border-spek-accent/30 transition-colors relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <i data-lucide="briefcase" class="w-16 h-16 text-white"></i>
+                        </div>
+                        <span class="text-xs font-mono text-white uppercase tracking-widest block mb-3">Ingeniería, Proyectos y Comercial</span>
+                        <h4 class="text-xl font-bold text-white mb-6">Ing. Víctor Galván S.</h4>
+                        
+                        <div class="space-y-4 text-sm text-gray-300 mb-8">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                    <i data-lucide="phone" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <span class="font-mono text-base">81 1991 1723</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                    <i data-lucide="mail" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <a href="mailto:vgalvan @spekmx.com" class="font-mono text-base text-white hover:text-spek-accent transition-colors">vgalvan @spekmx.com</a>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Button -->
+                        <a href="https://wa.me/528119911723" target="_blank" class="flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold transition-all shadow-lg hover:shadow-[#25D366]/20 transform hover:-translate-y-1">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span>WhatsApp Directo</span>
+                        </a>
+                    </div>
+
+                    <!-- Contact Card 2: Juan Jongitud -->
+                    <div class="group bg-[#121212] border border-white/10 p-8 rounded-2xl hover:border-white/20 transition-colors">
+                        <span class="text-xs font-mono text-white uppercase tracking-widest block mb-3">Ingeniería de Proyectos</span>
+                        <h4 class="text-xl font-bold text-white mb-6">Ing. Juan Jongitud</h4>
+                        
+                        <div class="space-y-4 text-sm text-gray-400">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                    <i data-lucide="phone" class="w-4 h-4 text-white group-hover:text-spek-accent transition-colors"></i>
+                                </div>
+                                <span class="font-mono text-base">81 3124 2806</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                    <i data-lucide="mail" class="w-4 h-4 text-white group-hover:text-spek-accent transition-colors"></i>
+                                </div>
+                                <a href="mailto:jjongitud @spekmx.com" class="font-mono text-base text-white hover:text-spek-accent transition-colors">jjongitud @spekmx.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/10 bg-black text-center text-gray-400 text-sm">
+        <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-10 text-xs font-medium tracking-widest uppercase">
+            <a href="#hero" class="text-white hover:text-spek-accent transition-colors">Inicio</a>
+            <a href="#services" class="text-white hover:text-spek-accent transition-colors">Servicios</a>
+            <a href="#proyectos" class="text-white hover:text-spek-accent transition-colors">Proyectos</a>
+            <a href="#" class="text-white hover:text-spek-accent transition-colors">Recursos</a>
+            <a href="#informacion-directa" class="text-white hover:text-spek-accent transition-colors">Contacto</a>
+            <span class="text-gray-700 cursor-default select-none">Login</span>
+        </div>
+        <div class="flex justify-center gap-6 mb-8 text-white">
+            <a href="https://youtube.com/@spek-industrial?si=aWuGuoxtKEppkA41" class="hover:text-spek-accent transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/spekindustrial?igsh=azZiYjZqNGhlbm5q&utm_source=qr" class="hover:text-spek-accent transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.tiktok.com/@spekindustrial?_r=1&_t=ZS-93DV6YoT2XM" class="hover:text-spek-accent transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+            </a>
+        </div>
+        <p>&copy; 2025 Spek Industries.</p>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Icons safely
+            try {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            } catch (e) {
+                console.warn("Lucide icons failed to load", e);
+            }
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            const body = document.body;
+            
+            // --- Navbar Scroll Logic ---
+            const nav = document.getElementById('main-nav');
+            if (nav) {
+                // Set initial state
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+                // Add scroll listener
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('scrolled');
+                    } else {
+                        nav.classList.remove('scrolled');
+                    }
+                });
+            }
+
+            // --- Theme Toggle Logic (Persistence) ---
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                body.classList.add('light-mode');
+            }
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    body.classList.toggle('light-mode');
+                    // Save preference
+                    localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
+                    
+                    if (window.lucide) {
+                        lucide.createIcons();
+                    }
+                });
+            }
+
+            // --- Mobile Menu Logic ---
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-x-full');
+                });
+            }
+
+            if (closeMenuBtn && mobileMenu) {
+                closeMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                });
+            }
+
+            // Close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                });
+            });
+
+            // Safety: Force visibility after 1.2s
+            setTimeout(() => {
+                document.body.classList.add('force-visible');
+            }, 1200);
+
+            try {
+                const title = document.getElementById('hero-title');
+                if (title) {
+                    const wrapLetters = (element) => {
+                        const textNodes = [];
+                        function findText(node) {
+                            if (node.nodeType === 3) {
+                                textNodes.push(node);
+                            } else {
+                                node.childNodes.forEach(findText);
+                            }
+                        }
+                        findText(element);
+
+                        textNodes.forEach(node => {
+                            const text = node.textContent;
+                            if(!text.trim()) return;
+                            
+                            const fragment = document.createDocumentFragment();
+                            [...text].forEach((char, index) => {
+                                const wrapper = document.createElement('span');
+                                wrapper.className = 'char-wrapper';
+                                
+                                const inner = document.createElement('span');
+                                inner.className = 'char-reveal';
+                                inner.textContent = char === ' ' ? '\u00A0' : char;
+                                inner.style.animationDelay = `${index * 0.03}s`; // Stagger letters
+                                
+                                wrapper.appendChild(inner);
+                                fragment.appendChild(wrapper);
+                            });
+                            node.replaceWith(fragment);
+                        });
+                    };
+
+                    wrapLetters(title);
+                }
+            } catch (e) {
+                console.error("Text animation error", e);
+            }
+            
+            setTimeout(() => {
+                const hero = document.getElementById('hero');
+                if(hero) hero.classList.add('hero-loaded');
+            }, 100);
+            
+            try {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('reveal-active');
+                            observer.unobserve(entry.target); 
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+            } catch (e) {
+                console.warn("Observer failed", e);
+                document.body.classList.add('force-visible');
+            }
+
+            // Flashlight Effect (Optimized with requestAnimationFrame)
+            const cardsContainer = document.getElementById('cards-container');
+            if (cardsContainer) {
+                const cards = document.querySelectorAll('.flashlight-card');
+                let ticking = false; // Flag to prevent layout thrashing
+
+                cardsContainer.addEventListener('mousemove', (e) => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            cards.forEach(card => {
+                                const rect = card.getBoundingClientRect();
+                                const x = e.clientX - rect.left;
+                                const y = e.clientY - rect.top;
+                                
+                                card.style.setProperty('--mouse-x', `${x}px`);
+                                card.style.setProperty('--mouse-y', `${y}px`);
+                            });
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+            }
+
+            // 3D Card Rotator Logic
+            const cardElements = document.querySelectorAll('.rotator-card');
+            if (cardElements.length > 0) {
+                let currentIndex = 0;
+
+                function updateCarousel() {
+                    cardElements.forEach((card, i) => {
+                        card.className = 'rotator-card'; // reset
+                        if (i === currentIndex) {
+                            card.classList.add('active');
+                        } else if (i === (currentIndex + 1) % 3) {
+                            card.classList.add('next');
+                        } else {
+                            card.classList.add('prev');
+                        }
+                    });
+                }
+
+                const nextBtn = document.getElementById('next-btn');
+                const prevBtn = document.getElementById('prev-btn');
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        currentIndex = (currentIndex + 1) % 3;
+                        updateCarousel();
+                    });
+                }
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        currentIndex = (currentIndex - 1 + 3) % 3;
+                        updateCarousel();
+                    });
+                }
+            }
+        });
+    </script>
+    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCF9jxWV_iO9fg_O-We-1g2NThJsDufU-Q",
+          authDomain: "web-page-spek.firebaseapp.com",
+          projectId: "web-page-spek",
+          storageBucket: "web-page-spek.firebasestorage.app",
+          messagingSenderId: "586135379971",
+          appId: "1:586135379971:web:5d11d6cbe3fe5b6428ae36",
+          measurementId: "G-9D1HMFCSF2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+</body>
+</html>
