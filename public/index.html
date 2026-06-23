@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spek | Soluciones Industriales</title>
+    <title>Spek | Diseño, Fabricación y Mantenimiento de Líneas de Pintura Industrial</title>
+    <meta name="description" content="Especialistas en el diseño, fabricación, optimización y mantenimiento de líneas de pintura industrial electrostática y líquida. Soluciones llave en mano, refacciones y maquinados de precisión en Monterrey.">
+    <meta name="keywords" content="líneas de pintura, pintura electrostática, cabinas de pintura, hornos de curado, monorriel aéreo, pailería industrial, maquinados de precisión, Spek Industrial">
     <link rel="icon" type="image/png" href="assets/spek_logo_white.png">
     
     <!-- Tailwind CSS -->
@@ -407,65 +409,7 @@
             z-index: 2;
         }
 
-        /* --- 3D Card Rotator --- */
-        .rotator-container {
-            perspective: 1000px;
-            height: 450px;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        @media (max-width: 768px) {
-            .rotator-container {
-                height: 350px;
-                perspective: 600px;
-            }
-        }
-        .rotator-card {
-            position: absolute;
-            width: 100%;
-            max-width: 500px;
-            height: 350px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 16px;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform-style: preserve-3d;
-        }
-        @media (max-width: 768px) {
-            .rotator-card {
-                height: 280px;
-                max-width: 90%;
-            }
-        }
-        .light-mode .rotator-card {
-            background: #ffffff;
-            border-color: #e5e7eb;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-        }
-        .rotator-card.active {
-            transform: translateX(0) scale(1) translateZ(0);
-            z-index: 20;
-            opacity: 1;
-            border-color: #FF4D00;
-        }
-        .rotator-card.next {
-            transform: translateX(60px) scale(0.85) translateZ(-100px) rotateY(-5deg);
-            z-index: 10;
-            opacity: 0.5;
-            filter: blur(2px);
-        }
-        .rotator-card.prev {
-            transform: translateX(-60px) scale(0.85) translateZ(-100px) rotateY(5deg);
-            z-index: 10;
-            opacity: 0.5;
-            filter: blur(2px);
-        }
+
         
         .testimonial-card {
             background: linear-gradient(145deg, #121212, #0a0a0a);
@@ -504,6 +448,60 @@
         }
         .light-mode nav:not(.scrolled) {
              background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+        }
+
+        /* --- Active Tab Styling for Paint Gallery --- */
+        .paint-tab-btn.active-tab {
+            background-color: rgba(255, 77, 0, 0.05) !important;
+            border-color: rgba(255, 77, 0, 0.3) !important;
+        }
+        .light-mode .paint-tab-btn.active-tab {
+            background-color: rgba(255, 77, 0, 0.08) !important;
+            border-color: rgba(255, 77, 0, 0.4) !important;
+        }
+
+        /* --- Hide Scrollbar Utility --- */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* --- Smooth Services Background Fading --- */
+        #services {
+            background: linear-gradient(to bottom, var(--bg-main) 0%, var(--bg-secondary) 15%, var(--bg-secondary) 85%, var(--bg-main) 100%) !important;
+        }
+
+        /* --- Interactive Map Styles --- */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+        .pulse-ring {
+            animation: pulse-ring 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring-large {
+            0% { transform: scale(0.4); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .pulse-ring-large {
+            animation: pulse-ring-large 4s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -40;
+            }
+        }
+        .connection-line {
+            stroke-dasharray: 8 4;
+            animation: dash 2s linear infinite;
+        }
+        .map-node {
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
@@ -677,7 +675,7 @@
                 <div class="flex justify-between md:justify-end items-center gap-8">
                     <div class="hidden sm:flex flex-col items-end gap-1 text-[10px] text-white font-mono uppercase tracking-widest">
                         <span>Ingeniería aplicada</span>
-                        <span>Fabricación industrial</span>
+                        <span>Líneas de pintura</span>
                         <span>Continuidad operativa</span>
                     </div>
                     <div class="flex items-center gap-2 text-white text-xs tracking-widest uppercase animate-bounce ml-auto sm:ml-0">
@@ -709,9 +707,9 @@
             </h1>
 
                 <div class="reveal-on-scroll mb-10" style="animation-delay: 0.6s;">
-                    <h3 class="text-xl font-bold text-white mb-3">Excelencia y calidad</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Especialistas en Líneas de Pintura</h3>
                     <p class="text-base text-gray-400 max-w-lg leading-relaxed">
-                        En SPEK Industrial ofrecemos soluciones industriales integrales. Nos especializamos en la fabricación, modificación y mantenimiento de líneas de pintura industrial, además de proveer consumibles, refacciones y equipos. Complementamos nuestros servicios con pailería industrial, automatización, integración de sistemas y maquinados de precisión para cubrir las necesidades reales de cada operación.
+                        En SPEK Industrial diseñamos, fabricamos y brindamos mantenimiento integral a líneas de pintura industrial (electrostática/polvo y líquida). Ofrecemos soluciones llave en mano para optimizar tus procesos de acabado, complementando nuestro portafolio con pailería de precisión, maquinados CNC y suministro continuo de refacciones especializadas.
                     </p>
                 </div>
 
@@ -724,15 +722,18 @@
                 </div>
             </div>
 
-            <div class="order-1 md:order-2 relative h-[300px] md:h-[400px] w-full reveal-on-scroll" style="animation-delay: 0.4s;">
-                <div class="absolute inset-0 bg-gradient-to-tr from-spek-accent/20 to-transparent rounded-2xl blur-3xl opacity-30"></div>
-                <img src="assets/spek_portada.jpeg" alt="Industrial Arm" class="w-full h-full object-cover rounded-2xl border border-white/10 shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+            <div class="order-1 md:order-2 relative w-full reveal-on-scroll flex flex-col" style="animation-delay: 0.4s;">
+                <div class="relative h-[300px] md:h-[400px] w-full">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-spek-accent/20 to-transparent rounded-2xl blur-3xl opacity-30"></div>
+                    <img src="assets/spek_portada.png" alt="Industrial Arm" class="w-full h-full object-cover rounded-2xl border border-white/10 shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="mt-2 text-right font-mono text-xs text-gray-500 tracking-widest select-none">2026</div>
             </div>
         </div>
     </section>
 
     <!-- Logo Loop -->
-    <section class="py-10 border-y border-white/5 bg-black/50 overflow-hidden">
+    <section class="py-10 border-t border-white/5 bg-black/50 overflow-hidden">
         <div class="text-center mb-6">
             <span class="text-sm font-bold tracking-widest text-white uppercase">Nuestros Clientes</span>
         </div>
@@ -780,51 +781,65 @@
 
     <!-- Services -->
     <section class="py-32 relative min-h-[80vh] flex items-center overflow-hidden bg-spek-black" id="services">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-20 text-center reveal-on-scroll">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Nuestros Servicios</h2>
-                <p class="text-gray-400">Soluciones integrales para la industria moderna.</p>
+        <div class="max-w-[1400px] mx-auto px-6 w-full">
+            <!-- Header with navigation arrows -->
+            <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 reveal-on-scroll">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Nuestros Servicios</h2>
+                    <p class="text-gray-400">Soluciones integrales para la industria moderna.</p>
+                </div>
+                <!-- Navigation Arrows -->
+                <div class="flex gap-4 self-end md:self-auto">
+                    <button id="services-prev-btn" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white/10 hover:border-spek-accent flex items-center justify-center transition-all text-white" aria-label="Anterior">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <button id="services-next-btn" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white/10 hover:border-spek-accent flex items-center justify-center transition-all text-white" aria-label="Siguiente">
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-container">
+
+            <!-- Horizontal Carousel (flex row snap scroll) -->
+            <div class="flex flex-row overflow-x-auto snap-x snap-mandatory scrollbar-none gap-6 pb-6 w-full" id="cards-container">
                  <!-- Card 1 -->
-                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-1">
-                    <div class="flashlight-inner flex flex-col justify-between">
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-1 shrink-0 w-[85vw] sm:w-[380px] snap-start">
+                    <div class="flashlight-inner flex flex-col justify-between h-full">
                         <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
                             <i data-lucide="paint-bucket" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Diseño e implementación de líneas de pintura</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed">Sistemas automatizados de pintura electrostática y líquida para acabados consistentes y eficientes.</p>
+                            <h3 class="text-xl font-bold mb-2">Fabricación e Implementación de Líneas de Pintura</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Sistemas completos y automatizados de pintura electrostática (polvo) y líquida a la medida: hornos de curado, cabinas de aplicación, etapas de pretratamiento y transportadores aéreos.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
-                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-2">
-                    <div class="flashlight-inner flex flex-col justify-between">
+                 <!-- Card 2 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-2 shrink-0 w-[85vw] sm:w-[380px] snap-start">
+                    <div class="flashlight-inner flex flex-col justify-between h-full">
                         <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
                             <i data-lucide="wrench" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Mantenimiento y modificaciones</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed">Optimización, reparación y adaptación de líneas existentes para mayor vida útil y rendimiento.</p>
+                            <h3 class="text-xl font-bold mb-2">Mantenimiento y Optimización de Líneas</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Servicios preventivos y correctivos para maximizar la continuidad operativa. Diagnóstico térmico de hornos, calibración de quemadores, reparación de transportadores y actualización de controles.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Card 3 -->
-                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-3">
-                    <div class="flashlight-inner flex flex-col justify-between">
+                 <!-- Card 3 -->
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-3 shrink-0 w-[85vw] sm:w-[380px] snap-start">
+                    <div class="flashlight-inner flex flex-col justify-between h-full">
                         <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
                             <i data-lucide="settings" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Refacciones, equipos y consumibles</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed">Suministro de piezas de repuesto, equipos especializados y materiales esenciales para procesos.</p>
+                            <h3 class="text-xl font-bold mb-2">Refacciones y Equipos de Pintura</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Suministro garantizado de pistolas de aplicación, boquillas, mangueras, filtros para cabinas, ganchos de colgado y refacciones críticas para evitar paros imprevistos.</p>
                         </div>
                     </div>
                 </div>
                 <!-- Card 4 -->
-                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-1">
-                    <div class="flashlight-inner flex flex-col justify-between">
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-1 shrink-0 w-[85vw] sm:w-[380px] snap-start">
+                    <div class="flashlight-inner flex flex-col justify-between h-full">
                         <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
                             <i data-lucide="layers" class="w-6 h-6"></i>
                         </div>
@@ -835,8 +850,8 @@
                     </div>
                 </div>
                 <!-- Card 5 -->
-                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-2">
-                    <div class="flashlight-inner flex flex-col justify-between">
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-2 shrink-0 w-[85vw] sm:w-[380px] snap-start">
+                    <div class="flashlight-inner flex flex-col justify-between h-full">
                         <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
                             <i data-lucide="hammer" class="w-6 h-6"></i>
                         </div>
@@ -847,8 +862,8 @@
                     </div>
                 </div>
                 <!-- Card 6 -->
-                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-3">
-                    <div class="flashlight-inner flex flex-col justify-between">
+                <div class="flashlight-card min-h-[320px] rounded-2xl group reveal-on-scroll stagger-3 shrink-0 w-[85vw] sm:w-[380px] snap-start">
+                    <div class="flashlight-inner flex flex-col justify-between h-full">
                         <div class="w-12 h-12 rounded-lg bg-spek-accent/10 text-spek-accent flex items-center justify-center mb-6">
                             <i data-lucide="crosshair" class="w-6 h-6"></i>
                         </div>
@@ -858,6 +873,128 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Slide Indicator Dots -->
+            <div class="flex justify-center gap-2 mt-8" id="services-dots-container">
+                <button class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 services-dot active-dot bg-spek-accent" data-slide="0"></button>
+                <button class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 services-dot" data-slide="1"></button>
+                <button class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 services-dot" data-slide="2"></button>
+                <button class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 services-dot" data-slide="3"></button>
+                <button class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 services-dot" data-slide="4"></button>
+                <button class="w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300 services-dot" data-slide="5"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paint Line Components Section (Interactive Gallery) -->
+    <section class="py-24 bg-black relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,77,0,0.05),transparent_40%)] pointer-events-none"></div>
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            <div class="mb-16 text-center reveal-on-scroll">
+                <span class="text-spek-accent font-mono text-xs tracking-widest uppercase mb-2 block">Ingeniería Integrada</span>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Componentes de una Línea de Pintura</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Fabricamos, instalamos y modernizamos cada etapa crítica del proceso de acabado industrial para garantizar calidad y consistencia.</p>
+            </div>
+            
+            <!-- Interactive Split Screen Gallery -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                
+                <!-- Left Navigation Panel (5 cols) -->
+                <div class="lg:col-span-5 flex flex-col gap-4 order-2 lg:order-1">
+                    
+                    <!-- Tab Button 1 -->
+                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden active-tab" data-stage="0">
+                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
+                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">01</span>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Pretratamiento Químico</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Túneles de lavado por aspersión o tinas de inmersión para limpieza profunda.</p>
+                        </div>
+                    </button>
+
+                    <!-- Tab Button 2 -->
+                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden" data-stage="1">
+                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
+                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">02</span>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Hornos de Curado y Secado</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Hornos industriales de convección de gas o eléctricos con estabilidad térmica.</p>
+                        </div>
+                    </button>
+
+                    <!-- Tab Button 3 -->
+                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden" data-stage="2">
+                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
+                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">03</span>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Cabinas de Aplicación</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Cabinas presurizadas para pintura en polvo y líquida de alta transferencia.</p>
+                        </div>
+                    </button>
+
+                    <!-- Tab Button 4 -->
+                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden" data-stage="3">
+                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
+                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">04</span>
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Sistemas de Transportación</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Monorrieles aéreos y transportadores continuos de carga pesada.</p>
+                        </div>
+                    </button>
+                    
+                </div>
+                
+                <!-- Right Showcase Panel (7 cols) -->
+                <div class="lg:col-span-7 flex flex-col gap-6 order-1 lg:order-2">
+                    <!-- Image Card with Overlay -->
+                    <div class="relative h-[300px] md:h-[400px] w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-gray-900 group">
+                        <img id="gallery-image" src="assets/hornos.jpg" alt="Pretratamiento Químico" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10"></div>
+                    </div>
+
+                    <!-- Ficha Técnica (Specifications Container) -->
+                    <div class="bg-[#121212] border border-white/10 p-6 md:p-8 rounded-2xl transition-all duration-500">
+                        <h4 id="gallery-title" class="text-2xl font-bold text-white mb-4">Pretratamiento Químico</h4>
+                        <p id="gallery-desc" class="text-gray-400 text-sm mb-6 leading-relaxed font-sans">
+                            Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura.
+                        </p>
+                        
+                        <div class="h-px bg-white/10 mb-6"></div>
+
+                        <!-- Specs Grid -->
+                        <div id="gallery-specs" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
+                                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] font-mono text-gray-500 uppercase">Material</div>
+                                    <div class="text-sm font-bold text-white">Acero Inox 304</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] font-mono text-gray-500 uppercase">Proceso</div>
+                                    <div class="text-sm font-bold text-white">Aspersión / Inmersión</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
+                                    <i data-lucide="spray-can" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] font-mono text-gray-500 uppercase">Boquillas</div>
+                                    <div class="text-sm font-bold text-white">Clip Rápido Reg.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1039,39 +1176,402 @@
 
     <!-- Projects -->
     <section id="proyectos" class="py-32 relative overflow-hidden border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="order-2 lg:order-1 reveal-on-scroll">
-                <span class="text-white font-mono text-sm tracking-wider mb-2 block">CASOS DE ÉXITO</span>
-                <h2 class="text-4xl md:text-5xl font-bold mb-8">Innovación en Movimiento</h2>
-                <p class="text-gray-400 mb-8 text-lg">Explora nuestros proyectos más recientes donde la tecnología Spek ha transformado la producción.</p>
-                <div class="flex gap-4 mb-12">
-                    <button id="prev-btn" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white/10 hover:border-spek-accent flex items-center justify-center transition-all text-white"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
-                    <button id="next-btn" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white/10 hover:border-spek-accent flex items-center justify-center transition-all text-white"><i data-lucide="arrow-right" class="w-5 h-5"></i></button>
-                </div>
-                <div class="relative w-full h-64 rounded-xl overflow-hidden group border border-white/10 isolate cursor-pointer">
-                    <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105 z-0"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" alt="Engineers working" class="w-full h-full object-cover opacity-60 filter grayscale group-hover:grayscale-0 transition-all duration-500"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10 opacity-90 group-hover:opacity-80 transition-opacity"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end items-start z-20">
-                        <div class="mb-auto"><span class="inline-block py-1 px-2 rounded bg-spek-accent/20 text-spek-accent text-[10px] font-mono font-bold tracking-widest uppercase mb-2 border border-spek-accent/30">Talento</span></div>
-                        <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-spek-accent transition-colors">Únete a SPEK</h3>
-                        <p class="text-sm text-gray-300 mb-6 max-w-sm leading-relaxed">Forma parte de una empresa industrial enfocada en las personas, donde se reconoce la experiencia, el compromiso y el trabajo bien hecho. En SPEK Industrial impulsamos el desarrollo profesional dentro de un ambiente seguro, colaborativo y respetuoso.</p>
-                        <!-- Button Removed Here -->
-                    </div>
-                    <div class="absolute inset-0 border border-white/0 group-hover:border-spek-accent/50 rounded-xl transition-all duration-500 z-30 pointer-events-none"></div>
-                </div>
-            </div>
-            <div class="order-1 lg:order-2 reveal-on-scroll delay-200">
-                <div class="rotator-container">
-                    <div class="rotator-card active p-1"><div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative"><img src="assets/p2.png" class="w-full h-full object-cover" alt="Project 1"><div class="p-6"></div></div></div>
+        <div class="absolute right-0 top-0 w-1/3 h-1/2 bg-gradient-to-bl from-spek-accent/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6">
 
-                    <div class="rotator-card next p-1"><div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative"><img src="assets/p3.png" class="w-full h-full object-cover" alt="Project 2"><div class="p-6"><div class="text-white text-xs font-mono mb-2">AUTOMOTIVE</div><h3 class="text-xl font-bold mb-2 text-white">Línea Tesla-V</h3><p class="text-gray-400 text-sm">Ensamblaje robótico de chasis en tiempo récord.</p></div></div></div>
-                    <div class="rotator-card prev p-1"><div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative"><img src="assets/p4.png" class="w-full h-full object-cover" alt="Project 3"><div class="p-6"><div class="text-white text-xs font-mono mb-2">ENERGY</div><h3 class="text-xl font-bold mb-2 text-white">Reactor Core</h3><p class="text-gray-400 text-sm">Sistemas de enfriamiento de próxima generación.</p></div></div></div>
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">INNOVACIÓN EN MOVIMIENTO</h2>
+                <p class="text-gray-400 text-base leading-relaxed max-w-2xl mx-auto">Proyectos donde la ingeniería de Spek ha transformado la producción industrial.</p>
+            </div>
+
+            <!-- Coverflow 3D -->
+            <div class="reveal-on-scroll flex flex-col items-center gap-8">
+
+                <!-- Stage -->
+                <div id="cf-stage" style="
+                    width:100%;
+                    height:520px;
+                    position:relative;
+                    perspective:900px;
+                    perspective-origin:50% 50%;
+                    overflow:hidden;
+                ">
+                    <!-- Left / Right responsive fades -->
+                    <div class="absolute inset-y-0 left-0 w-12 sm:w-20 md:w-28 lg:w-40 bg-gradient-to-r from-[#050505] via-[#050505]/40 to-transparent z-30 pointer-events-none"></div>
+                    <div class="absolute inset-y-0 right-0 w-12 sm:w-20 md:w-28 lg:w-40 bg-gradient-to-l from-[#050505] via-[#050505]/40 to-transparent z-30 pointer-events-none"></div>
+                    <!-- items injected by JS, each: position:absolute; top:50%; left:50% -->
                 </div>
+
+                <!-- Controls -->
+                <div style="display:flex;align-items:center;gap:16px;">
+
+                    <!-- Prev -->
+                    <button id="cf-prev" aria-label="Anterior" style="
+                        width:44px;height:44px;
+                        border-radius:12px;
+                        background:linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+                        border:1px solid rgba(255,255,255,0.1);
+                        color:rgba(255,255,255,0.7);
+                        cursor:pointer;
+                        display:flex;align-items:center;justify-content:center;
+                        transition:all .25s ease;
+                        backdrop-filter:blur(4px);
+                        box-shadow:0 2px 8px rgba(0,0,0,0.3);
+                    "
+                        onmouseover="this.style.background='linear-gradient(135deg,rgba(255,77,0,0.2),rgba(255,77,0,0.08))';this.style.borderColor='rgba(255,77,0,0.45)';this.style.color='#fff';this.style.transform='translateX(-2px)'"
+                        onmouseout="this.style.background='linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.7)';this.style.transform='translateX(0)'"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+
+                    <!-- Counter + dots -->
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:80px;">
+                        <span id="cf-counter" style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.15em;text-align:center;">01 / 12</span>
+                        <div id="cf-dots" style="display:flex;gap:4px;"></div>
+                    </div>
+
+                    <!-- Next -->
+                    <button id="cf-next" aria-label="Siguiente" style="
+                        width:44px;height:44px;
+                        border-radius:12px;
+                        background:linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+                        border:1px solid rgba(255,255,255,0.1);
+                        color:rgba(255,255,255,0.7);
+                        cursor:pointer;
+                        display:flex;align-items:center;justify-content:center;
+                        transition:all .25s ease;
+                        backdrop-filter:blur(4px);
+                        box-shadow:0 2px 8px rgba(0,0,0,0.3);
+                    "
+                        onmouseover="this.style.background='linear-gradient(135deg,rgba(255,77,0,0.2),rgba(255,77,0,0.08))';this.style.borderColor='rgba(255,77,0,0.45)';this.style.color='#fff';this.style.transform='translateX(2px)'"
+                        onmouseout="this.style.background='linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))';this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.7)';this.style.transform='translateX(0)'"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+
+                </div>
+
             </div>
         </div>
     </section>
 
-    
+    <script>
+    (function(){
+        var ITEMS = [
+            { type:'video', src:'assets/e11.mp4' },
+            { type:'img',   src:'assets/e1.jpg'  },
+            { type:'img',   src:'assets/e2.jpg'  },
+            { type:'img',   src:'assets/e3.jpg'  },
+            { type:'img',   src:'assets/e4.jpg'  },
+            { type:'img',   src:'assets/e5.jpg'  },
+            { type:'img',   src:'assets/e6.jpg'  },
+            { type:'img',   src:'assets/e7.jpg'  },
+            { type:'img',   src:'assets/e8.jpg'  },
+            { type:'img',   src:'assets/e9.jpg'  },
+            { type:'img',   src:'assets/e10.jpg' },
+            { type:'img',   src:'assets/e12.jpg' }
+        ];
+        var N = ITEMS.length, cur = 0;
+        var offset = 340;
+        var stage   = document.getElementById('cf-stage');
+        var counter = document.getElementById('cf-counter');
+        var dotsWrap= document.getElementById('cf-dots');
+
+        /* ---- Dots ---- */
+        var dots = ITEMS.map(function(_, i){
+            var d = document.createElement('div');
+            d.style.cssText = 'width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all .3s;cursor:pointer;';
+            d.onclick = function(){ go(i); };
+            dotsWrap.appendChild(d);
+            return d;
+        });
+
+        /* ---- Build items ---- */
+        var els = ITEMS.map(function(item, i){
+            var wrap = document.createElement('div');
+            /* 
+             * IMPORTANT: position absolute, centered at 50%/50%.
+             * The transform will shift & rotate each item.
+             * No explicit width/height — the image determines the size.
+             */
+            wrap.style.cssText = [
+                'position:absolute',
+                'top:50%', 'left:50%',
+                'transform-origin:center center',
+                'transition:transform .75s cubic-bezier(.25,.46,.45,.94), opacity .5s, filter .5s, z-index 0s',
+                'cursor:pointer',
+                'border-radius:14px',
+                'overflow:hidden',
+                'border:1px solid rgba(255,255,255,0.08)',
+                'box-shadow:0 16px 60px rgba(0,0,0,.7)',
+                'background:#0c0c0c',
+            ].join(';');
+
+            var media;
+            if(item.type === 'video'){
+                media = document.createElement('video');
+                media.src = item.src;
+                media.autoplay = true; media.loop = true; media.muted = true; media.playsInline = true;
+                /* Protección: sin descarga, sin pip, sin menú contextual */
+                media.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
+                media.setAttribute('disablePictureInPicture', '');
+                media.setAttribute('disableRemotePlayback', '');
+                media.oncontextmenu = function(e){ e.preventDefault(); return false; };
+                /* Video badge */
+                var vb = document.createElement('div');
+                vb.innerHTML = '<span style="width:5px;height:5px;border-radius:50%;background:#ff4d00;animation:pulse 1.5s infinite;display:inline-block;vertical-align:middle;margin-right:5px;"></span>VIDEO';
+                vb.style.cssText = 'position:absolute;top:10px;left:10px;font-family:monospace;font-size:9px;letter-spacing:.1em;color:#ff4d00;background:rgba(0,0,0,.75);border:1px solid rgba(255,77,0,.4);border-radius:20px;padding:4px 10px;z-index:2;pointer-events:none;';
+                wrap.appendChild(vb);
+            } else {
+                media = document.createElement('img');
+                media.src = item.src;
+                media.alt = 'SPEK project';
+            }
+
+            /*
+             * KEY: display:block, NO explicit width/height, NO object-fit.
+             * max-height caps very tall images; width:auto preserves ratio.
+             * max-width caps very wide images; height:auto preserves ratio.
+             * The image will render at its NATURAL aspect ratio.
+             */
+            media.style.cssText = 'display:block;width:auto;height:auto;pointer-events:none;';
+            wrap.insertBefore(media, wrap.firstChild);
+
+            wrap.onclick = function(){ go(i); };
+            stage.appendChild(wrap);
+            return wrap;
+        });
+
+        /* ---- Lay out positions ---- */
+        function go(idx){
+            cur = ((idx % N) + N) % N;
+            render();
+        }
+
+        function render(){
+            counter.textContent = String(cur+1).padStart(2,'0') + ' / ' + String(N).padStart(2,'0');
+
+            els.forEach(function(el, i){
+                var rel = i - cur;
+                if(rel >  N/2) rel -= N;
+                if(rel < -N/2) rel += N;
+                var a = Math.abs(rel);
+
+                /* 
+                 * translateX: centers item on its OWN center via -50%,
+                 *             then shifts horizontally by rel * offset.
+                 * translateY: centers vertically on its OWN center via -50%.
+                 * rotateY:    tilts items left/right.
+                 * translateZ: active item closer to camera.
+                 * scale:      active item slightly larger.
+                 */
+                var rotY    = rel === 0 ? 0 : (rel > 0 ? 1 : -1) * Math.min(a * 48, 72);
+                var tz      = a === 0 ? 80  : a === 1 ? -80 : -200;
+                var scl     = a === 0 ? 1   : a === 1 ? 0.8  : 0.62;
+                var opacity = a === 0 ? 1   : a === 1 ? 0.72 : a === 2 ? 0.38 : 0;
+                var gs      = a === 0 ? 0   : a === 1 ? 15   : 60;
+                var bright  = a === 0 ? 1.05: 0.8;
+
+                var tx = 'calc(-50% + ' + (rel * offset) + 'px)';
+
+                el.style.transform   = 'translateX('+tx+') translateY(-50%) translateZ('+tz+'px) rotateY('+rotY+'deg) scale('+scl+')';
+                el.style.opacity     = opacity;
+                el.style.zIndex      = 100 - a;
+                el.style.filter      = 'grayscale('+gs+'%) brightness('+bright+')';
+                el.style.pointerEvents = a <= 2 ? 'auto' : 'none';
+            });
+
+            dots.forEach(function(d, i){
+                d.style.background = i===cur ? '#ff4d00' : 'rgba(255,255,255,0.22)';
+                d.style.transform  = i===cur ? 'scale(1.6)' : 'scale(1)';
+            });
+        }
+
+        /* ---- Responsive Layout Configuration ---- */
+        function adjustLayout(){
+            var w = window.innerWidth;
+            var maxH, maxW, stageH;
+            if(w < 640){
+                offset = 140;
+                stageH = 340;
+                maxW = Math.floor(w * 0.82);
+                maxH = 260;
+            } else if(w < 1024){
+                offset = 240;
+                stageH = 430;
+                maxW = 420;
+                maxH = 350;
+            } else {
+                offset = 340;
+                stageH = 520;
+                maxW = 600;
+                maxH = 440;
+            }
+            stage.style.height = stageH + 'px';
+            els.forEach(function(el){
+                var media = el.querySelector('img, video');
+                if(media){
+                    media.style.maxWidth = maxW + 'px';
+                    media.style.maxHeight = maxH + 'px';
+                }
+            });
+            render();
+        }
+
+        adjustLayout();
+
+        var resizeTimeout;
+        window.addEventListener('resize', function(){
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(adjustLayout, 100);
+        });
+
+        document.getElementById('cf-prev').onclick = function(){ go(cur-1); };
+        document.getElementById('cf-next').onclick = function(){ go(cur+1); };
+
+        /* Drag */
+        var sx = 0, dragging = false;
+        stage.oncontextmenu = function(e){ e.preventDefault(); return false; }; /* bloquea clic derecho */
+        stage.onmousedown  = function(e){ dragging=true; sx=e.clientX; e.preventDefault(); };
+        window.onmousemove = function(e){ if(!dragging) return; if(Math.abs(e.clientX-sx)>55){ go(e.clientX<sx?cur+1:cur-1); sx=e.clientX; } };
+        window.onmouseup   = function(){ dragging=false; };
+
+        stage.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; },{passive:true});
+        stage.addEventListener('touchmove',function(e){ var dx=e.touches[0].clientX-sx; if(Math.abs(dx)>55){ go(dx<0?cur+1:cur-1); sx=e.touches[0].clientX; } },{passive:true});
+
+        document.addEventListener('keydown',function(e){
+            if(e.key==='ArrowRight') go(cur+1);
+            if(e.key==='ArrowLeft')  go(cur-1);
+        });
+    })();
+    </script>
+
+    <!-- Mapa de Presencia y Cobertura -->
+    <section id="cobertura" class="py-24 bg-black relative border-t border-white/5 overflow-hidden">
+        <!-- Decoraciones de fondo -->
+        <div class="absolute left-0 bottom-0 w-1/3 h-1/2 bg-gradient-to-tr from-spek-accent/5 to-transparent pointer-events-none"></div>
+        
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- Columna Izquierda: Información de Cobertura -->
+                <div class="lg:col-span-5 space-y-8 reveal-on-scroll">
+                    <div>
+                        <span class="text-spek-accent font-mono text-xs tracking-widest uppercase mb-2 block">ALCANCE GEOGRÁFICO</span>
+                        <h2 class="text-4xl md:text-5xl font-bold leading-tight text-white mb-6">NUESTRA <br> PRESENCIA</h2>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Desde nuestra sede principal en <strong>Monterrey, Nuevo León</strong>, coordinamos y extendemos nuestra ingeniería de vanguardia. Hemos desarrollado importantes proyectos y supervisado instalaciones llave en mano en la <strong>Ciudad de México</strong> y la región centro del país.
+                        </p>
+                    </div>
+
+                    <!-- Estadísticas Rápidas -->
+                    <div class="grid grid-cols-2 gap-6 pt-4 border-t border-white/10">
+                        <div>
+                            <span class="text-2xl md:text-3xl font-bold text-white font-mono block">MONTERREY</span>
+                            <span class="text-[10px] font-mono text-gray-500 uppercase tracking-wider block mt-1">Sede y Presencia</span>
+                        </div>
+                        <div>
+                            <span class="text-2xl md:text-3xl font-bold text-spek-accent font-mono block">CDMX</span>
+                            <span class="text-[10px] font-mono text-gray-500 uppercase tracking-wider block mt-1">Proyectos Realizados y Presencia</span>
+                        </div>
+                    </div>
+
+                    <!-- Listado de ubicaciones interactivo -->
+                    <div class="space-y-3 pt-4">
+                        <span class="text-xs font-mono text-gray-400 uppercase tracking-widest block mb-2">Zonas Clave de Operación</span>
+                        
+                        <div class="location-item group flex items-center justify-between p-4 rounded-xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 transition-all duration-300 cursor-pointer" data-target-node="node-mty">
+                            <div class="flex items-center gap-4">
+                                <div class="w-2.5 h-2.5 rounded-full bg-spek-accent group-hover:scale-125 transition-transform"></div>
+                                <span class="text-white font-bold text-sm">Monterrey, Nuevo León</span>
+                            </div>
+                            <span class="text-xs font-mono text-gray-500">Sede y Presencia</span>
+                        </div>
+
+                        <div class="location-item group flex items-center justify-between p-4 rounded-xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 transition-all duration-300 cursor-pointer" data-target-node="node-cdmx">
+                            <div class="flex items-center gap-4">
+                                <div class="w-2.5 h-2.5 rounded-full bg-white/40 group-hover:bg-[#FF4D00] transition-colors"></div>
+                                <span class="text-white text-sm">Ciudad de México (CDMX)</span>
+                            </div>
+                            <span class="text-xs font-mono text-gray-500">Proyectos Realizados y Presencia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: El Mapa SVG Interactiva de Control -->
+                <div class="lg:col-span-7 reveal-on-scroll delay-200">
+                    <div class="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 shadow-2xl overflow-hidden aspect-square max-w-[600px] mx-auto w-full flex items-center justify-center group/map">
+                        
+                        <!-- Mapa de fondo de alta definición generado -->
+                        <img src="assets/spek_map.png" alt="Cobertura Geográfica Spek" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-lighten pointer-events-none z-0 filter grayscale">
+                        
+                        <!-- Grid Táctico de fondo -->
+                        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none z-0"></div>
+                        
+                        <!-- Elementos de interfaz HUD (decorativos neón) -->
+                        <div class="absolute top-4 left-4 font-mono text-[9px] text-gray-600 pointer-events-none select-none z-10 space-y-1">
+                            <div>SYS_GRID: ON</div>
+                            <div>LOC_COORD: 25.6866° N, 100.3161° W</div>
+                        </div>
+                        <div class="absolute bottom-4 right-4 font-mono text-[9px] text-gray-600 pointer-events-none select-none z-10">
+                            SPEK COOP. SYSTEM v1.2
+                        </div>
+
+                        <!-- Contenedor Tooltip flotante dentro del mapa -->
+                        <div id="map-tooltip" class="absolute bg-black/95 border border-white/20 p-4 rounded-xl shadow-2xl opacity-0 translate-y-2 pointer-events-none transition-all duration-300 max-w-xs z-30">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <div id="tooltip-status" class="w-2 h-2 rounded-full bg-spek-accent"></div>
+                                <h4 id="tooltip-title" class="text-sm font-bold text-white font-mono">Monterrey</h4>
+                            </div>
+                            <p id="tooltip-desc" class="text-xs text-gray-400 leading-relaxed font-sans"></p>
+                        </div>
+
+                        <!-- Lienzo SVG superpuesto para arcos y nodos interactivos -->
+                        <svg viewBox="0 0 1000 1000" class="absolute inset-0 w-full h-full z-10 select-none">
+                            <!-- Líneas de Conexión Animadas (Arcos Bézier) -->
+                            <!-- MTY (350, 344) -> CDMX (405, 464) -->
+                            <path d="M 350,344 Q 377.5,404 405,464" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                            <path d="M 350,344 Q 377.5,404 405,464" class="connection-line" fill="none" stroke="#FF4D00" stroke-width="1.5" />
+
+
+                            <!-- NODOS DE PRESENCIA -->
+
+                            <!-- 1. Monterrey (Sede y Presencia) -->
+                            <g id="node-mty" class="map-node group/node cursor-pointer" data-title="Monterrey, N.L." data-desc="Nuestra oficina central y centro principal de ingeniería y fabricación. Desde aquí coordinamos todas las operaciones nacionales de Spek." data-status="Sede y Presencia">
+                                <circle cx="350" cy="344" r="22" fill="rgba(255, 77, 0, 0.15)" class="origin-center scale-90 opacity-0 group-hover/node:opacity-100 transition-opacity" />
+                                <circle cx="350" cy="344" r="32" fill="none" stroke="rgba(255, 77, 0, 0.3)" stroke-width="1" class="pulse-ring-large origin-center" />
+                                <circle cx="350" cy="344" r="16" fill="none" stroke="rgba(255, 77, 0, 0.5)" stroke-width="1" class="pulse-ring origin-center" />
+                                <circle cx="350" cy="344" r="8" fill="#FF4D00" />
+                                <circle cx="350" cy="344" r="3.5" fill="#FFFFFF" />
+                            </g>
+
+                            <!-- 2. Ciudad de México (Presencia Nacional) -->
+                            <g id="node-cdmx" class="map-node group/node cursor-pointer" data-title="Ciudad de México" data-desc="Instalaciones industriales y proyectos llave en mano ejecutados con éxito en la zona metropolitana y centro del país." data-status="Proyectos Realizados y Presencia">
+                                <circle cx="405" cy="464" r="20" fill="rgba(255, 77, 0, 0.1)" class="origin-center scale-90 opacity-0 group-hover/node:opacity-100 transition-opacity" />
+                                <circle cx="405" cy="464" r="28" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" class="pulse-ring origin-center" style="animation-delay: 1.5s;" />
+                                <circle cx="405" cy="464" r="6" fill="#FFFFFF" class="transition-all duration-300 group-hover/node:fill-[#FF4D00] group-hover/node:scale-125" />
+                                <circle cx="405" cy="464" r="2" fill="#000000" />
+                            </g>
+
+                            <!-- Etiquetas fijas discretas -->
+                            <text x="350" y="309" fill="#FF4D00" font-family="Space Grotesk, monospace" font-weight="bold" font-size="11" text-anchor="middle" letter-spacing="1">MONTERREY (HQ)</text>
+                            <text x="405" y="504" fill="#FF4D00" font-family="Space Grotesk, monospace" font-weight="bold" font-size="11" text-anchor="middle" letter-spacing="1">CIUDAD DE MÉXICO</text>
+
+                        </svg>
+
+                        <!-- Indicación táctil/hover para móviles -->
+                        <div class="absolute bottom-4 left-4 flex items-center gap-2 text-[10px] font-mono text-gray-500 pointer-events-none animate-pulse">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span>Pasa el cursor sobre los nodos para ver detalles</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Form -->
     <section id="contacto" class="py-24 bg-[#080808] relative border-t border-white/5">
@@ -1156,27 +1656,7 @@
                         </a>
                     </div>
 
-                    <!-- Contact Card 2: Juan Jongitud -->
-                    <div class="group bg-[#121212] border border-white/10 p-8 rounded-2xl hover:border-white/20 transition-colors">
-                        <span class="text-xs font-mono text-white uppercase tracking-widest block mb-3">Ingeniería de Proyectos</span>
-                        <h4 class="text-xl font-bold text-white mb-6">Ing. Juan Jongitud</h4>
-                        
-                        <div class="space-y-4 text-sm text-gray-400">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
-                                    <i data-lucide="phone" class="w-4 h-4 text-white group-hover:text-spek-accent transition-colors"></i>
-                                </div>
-                                <span class="font-mono text-base">81 3124 2806</span>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
-                                    <i data-lucide="mail" class="w-4 h-4 text-white group-hover:text-spek-accent transition-colors"></i>
-                                </div>
-                                <a href="mailto:jjongitud @spekmx.com" class="font-mono text-base text-white hover:text-spek-accent transition-colors">jjongitud @spekmx.com</a>
-                            </div>
-                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1377,41 +1857,329 @@
                 });
             }
 
-            // 3D Card Rotator Logic
-            const cardElements = document.querySelectorAll('.rotator-card');
-            if (cardElements.length > 0) {
-                let currentIndex = 0;
+            // Paint Lines Gallery Logic
+            const tabButtons = document.querySelectorAll('.paint-tab-btn');
+            const galleryImage = document.getElementById('gallery-image');
+            const galleryTitle = document.getElementById('gallery-title');
+            const galleryDesc = document.getElementById('gallery-desc');
+            const gallerySpecs = document.getElementById('gallery-specs');
 
-                function updateCarousel() {
-                    cardElements.forEach((card, i) => {
-                        card.className = 'rotator-card'; // reset
-                        if (i === currentIndex) {
-                            card.classList.add('active');
-                        } else if (i === (currentIndex + 1) % 3) {
-                            card.classList.add('next');
+            const stagesData = [
+                {
+                    title: "Pretratamiento Químico",
+                    desc: "Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura.",
+                    image: "assets/hornos.jpg",
+                    specs: [
+                        { label: "Material", val: "Acero Inox 304", icon: "shield-check" },
+                        { label: "Proceso", val: "Aspersión / Inmersión", icon: "layers" },
+                        { label: "Boquillas", val: "Clip Rápido Reg.", icon: "spray-can" }
+                    ]
+                },
+                {
+                    title: "Hornos de Curado y Secado",
+                    desc: "Nuestros hornos industriales de convección ofrecen un flujo de aire dinámico y uniforme de recirculación, asegurando que la pintura alcance su temperatura de curado ideal sin variaciones ni pérdidas térmicas.",
+                    image: "assets/spek_descarga.png",
+                    specs: [
+                        { label: "Temperatura", val: "Hasta 250°C", icon: "thermometer" },
+                        { label: "Quemador", val: "Gas Modulante", icon: "flame" },
+                        { label: "Aislamiento", val: "Lana Mineral 6''", icon: "layers" }
+                    ]
+                },
+                {
+                    title: "Cabinas de Aplicación",
+                    desc: "Fabricamos cabinas de aplicación presurizadas y controladas. Para pintura electrostática, incorporamos colectores de cartucho y ciclones de recuperación (99.7% eficiencia), y cascada de agua para líquida.",
+                    image: "assets/cabinas.jpg",
+                    specs: [
+                        { label: "Tipo", val: "Cambio Rápido Color", icon: "refresh-cw" },
+                        { label: "Eficiencia", val: "99.7% Recuperación", icon: "award" },
+                        { label: "Seguridad", val: "Norma ATEX / NFPA", icon: "shield-alert" }
+                    ]
+                },
+                {
+                    title: "Sistemas de Transportación",
+                    desc: "La continuidad de la línea depende del transportador. Diseñamos circuitos monorrieles aéreos continuos de alta resistencia (cadenas X348 / X458) y transportadores sobre suelo automatizados.",
+                    image: "assets/pretratamiento.jpg",
+                    specs: [
+                        { label: "Cadenas", val: "Tipo X348 / X458", icon: "link" },
+                        { label: "Control", val: "Variador VFD", icon: "cpu" },
+                        { label: "Lubricación", val: "Automática Neum.", icon: "droplet" }
+                    ]
+                }
+            ];
+
+            if (tabButtons.length > 0 && galleryImage) {
+                tabButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Remove active class from all
+                        tabButtons.forEach(b => b.classList.remove('active-tab'));
+                        // Add active class to clicked
+                        btn.classList.add('active-tab');
+
+                        const stageIndex = parseInt(btn.getAttribute('data-stage'));
+                        const data = stagesData[stageIndex];
+
+                        // Smooth transition: fade out, change, fade in
+                        const rightPanel = galleryImage.closest('.lg\\:col-span-7');
+                        if (rightPanel) {
+                            rightPanel.style.opacity = '0.3';
+                            rightPanel.style.transform = 'translateY(10px)';
+                            rightPanel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                        }
+
+                        setTimeout(() => {
+                            // Update content
+                            galleryImage.src = data.image;
+                            galleryImage.alt = data.title;
+                            galleryTitle.textContent = data.title;
+                            galleryDesc.textContent = data.desc;
+
+                            // Rebuild specs grid
+                            gallerySpecs.innerHTML = '';
+                            data.specs.forEach(spec => {
+                                const specDiv = document.createElement('div');
+                                specDiv.className = 'flex items-center gap-3';
+                                specDiv.innerHTML = `
+                                    <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
+                                        <i data-lucide="${spec.icon}" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] font-mono text-gray-500 uppercase">${spec.label}</div>
+                                        <div class="text-sm font-bold text-white">${spec.val}</div>
+                                    </div>
+                                `;
+                                gallerySpecs.appendChild(specDiv);
+                            });
+
+                            // Re-initialize lucide icons for newly added HTML
+                            if (window.lucide) {
+                                lucide.createIcons();
+                            }
+
+                            if (rightPanel) {
+                                rightPanel.style.opacity = '1';
+                                rightPanel.style.transform = 'translateY(0)';
+                            }
+                        }, 250);
+                    });
+                });
+            }
+
+            // --- Services Carousel Logic ---
+            const servicesContainer = document.getElementById('cards-container');
+            const servicesPrevBtn = document.getElementById('services-prev-btn');
+            const servicesNextBtn = document.getElementById('services-next-btn');
+            const servicesDots = document.querySelectorAll('.services-dot');
+
+            if (servicesContainer && servicesPrevBtn && servicesNextBtn) {
+                const getCardWidth = () => {
+                    const firstCard = servicesContainer.querySelector('.flashlight-card');
+                    return firstCard ? firstCard.clientWidth + 24 : 404; // card width + gap
+                };
+
+                const scrollToNext = () => {
+                    const cardWidth = getCardWidth();
+                    const maxScrollLeft = servicesContainer.scrollWidth - servicesContainer.clientWidth;
+                    // If we are at the end (with a safety margin of 10px), wrap around to 0
+                    if (servicesContainer.scrollLeft >= maxScrollLeft - 10) {
+                        servicesContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        servicesContainer.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    }
+                };
+
+                const scrollToPrev = () => {
+                    const cardWidth = getCardWidth();
+                    if (servicesContainer.scrollLeft <= 10) {
+                        servicesContainer.scrollTo({ left: servicesContainer.scrollWidth, behavior: 'smooth' });
+                    } else {
+                        servicesContainer.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                    }
+                };
+
+                servicesNextBtn.addEventListener('click', () => {
+                    scrollToNext();
+                    resetAutoplay();
+                });
+
+                servicesPrevBtn.addEventListener('click', () => {
+                    scrollToPrev();
+                    resetAutoplay();
+                });
+
+                // Update dots on scroll
+                let isScrolling;
+                servicesContainer.addEventListener('scroll', () => {
+                    window.clearTimeout(isScrolling);
+                    isScrolling = setTimeout(() => {
+                        const cardWidth = getCardWidth();
+                        const activeIndex = Math.min(
+                            servicesDots.length - 1,
+                            Math.max(0, Math.round(servicesContainer.scrollLeft / cardWidth))
+                        );
+                        
+                        servicesDots.forEach((dot, idx) => {
+                            if (idx === activeIndex) {
+                                dot.classList.add('active-dot');
+                                dot.classList.add('bg-spek-accent');
+                            } else {
+                                dot.classList.remove('active-dot');
+                                dot.classList.remove('bg-spek-accent');
+                            }
+                        });
+                    }, 50);
+                });
+
+                // Dots click logic
+                servicesDots.forEach((dot, idx) => {
+                    dot.addEventListener('click', () => {
+                        servicesContainer.scrollTo({
+                            left: idx * getCardWidth(),
+                            behavior: 'smooth'
+                        });
+                        resetAutoplay();
+                    });
+                });
+
+                // Autoplay Logic
+                let autoplayInterval;
+                const startAutoplay = () => {
+                    autoplayInterval = setInterval(() => {
+                        scrollToNext();
+                    }, 3500); // 3.5 seconds per slide
+                };
+
+                const stopAutoplay = () => {
+                    if (autoplayInterval) {
+                        clearInterval(autoplayInterval);
+                    }
+                };
+
+                const resetAutoplay = () => {
+                    stopAutoplay();
+                    startAutoplay();
+                };
+
+                // Event listeners to pause autoplay when hovered or touched
+                servicesContainer.addEventListener('mouseenter', stopAutoplay);
+                servicesContainer.addEventListener('mouseleave', startAutoplay);
+                servicesContainer.addEventListener('touchstart', stopAutoplay, { passive: true });
+                servicesContainer.addEventListener('touchend', startAutoplay, { passive: true });
+
+                // Also pause if hovering control buttons
+                servicesPrevBtn.addEventListener('mouseenter', stopAutoplay);
+                servicesPrevBtn.addEventListener('mouseleave', startAutoplay);
+                servicesNextBtn.addEventListener('mouseenter', stopAutoplay);
+                servicesNextBtn.addEventListener('mouseleave', startAutoplay);
+
+                // Start autoplay initially
+                startAutoplay();
+            }
+
+
+
+            // --- Interactive Coverage Map Logic ---
+            const mapNodes = document.querySelectorAll('.map-node');
+            const mapTooltip = document.getElementById('map-tooltip');
+            const tooltipTitle = document.getElementById('tooltip-title');
+            const tooltipDesc = document.getElementById('tooltip-desc');
+            const tooltipStatus = document.getElementById('tooltip-status');
+            const locationItems = document.querySelectorAll('.location-item');
+
+            const showTooltip = (node) => {
+                const title = node.getAttribute('data-title');
+                const desc = node.getAttribute('data-desc');
+                const status = node.getAttribute('data-status');
+                
+                tooltipTitle.textContent = title;
+                tooltipDesc.textContent = desc;
+                
+                // Adjust status dot color based on category
+                if (status.includes('Origen')) {
+                    tooltipStatus.className = 'w-2 h-2 rounded-full bg-spek-accent';
+                } else if (status.includes('Internacional')) {
+                    tooltipStatus.className = 'w-2 h-2 rounded-full bg-spek-accent';
+                } else {
+                    tooltipStatus.className = 'w-2 h-2 rounded-full bg-white';
+                }
+                
+                mapTooltip.style.opacity = '1';
+                mapTooltip.style.transform = 'translateY(0)';
+                
+                // Position tooltip relative to the card container
+                const mapWrapper = node.closest('.relative');
+                const mapRect = mapWrapper.getBoundingClientRect();
+                const nodeRect = node.getBoundingClientRect();
+                
+                const relativeX = nodeRect.left - mapRect.left + (nodeRect.width / 2);
+                const relativeY = nodeRect.top - mapRect.top;
+
+                // Prevent tooltip going out of bounds
+                const tooltipWidth = mapTooltip.offsetWidth || 220;
+                const tooltipHeight = mapTooltip.offsetHeight || 110;
+                
+                let posX = relativeX - (tooltipWidth / 2);
+                let posY = relativeY - tooltipHeight - 15;
+
+                if (posX < 10) posX = 10;
+                if (posX + tooltipWidth > mapRect.width - 10) posX = mapRect.width - tooltipWidth - 10;
+                if (posY < 10) posY = relativeY + nodeRect.height + 15; // show below if not enough space above
+
+                mapTooltip.style.left = `${posX}px`;
+                mapTooltip.style.top = `${posY}px`;
+            };
+
+            const hideTooltip = () => {
+                mapTooltip.style.opacity = '0';
+                mapTooltip.style.transform = 'translateY(8px)';
+            };
+
+            // Map Nodes Event Listeners
+            mapNodes.forEach(node => {
+                node.addEventListener('mouseenter', () => {
+                    showTooltip(node);
+                    
+                    // Highlight list item
+                    const nodeId = node.id;
+                    locationItems.forEach(item => {
+                        if (item.getAttribute('data-target-node') === nodeId) {
+                            item.classList.add('border-spek-accent/30', 'bg-[#181818]');
                         } else {
-                            card.classList.add('prev');
+                            item.classList.remove('border-spek-accent/30', 'bg-[#181818]');
                         }
                     });
-                }
+                });
 
-                const nextBtn = document.getElementById('next-btn');
-                const prevBtn = document.getElementById('prev-btn');
-
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', () => {
-                        currentIndex = (currentIndex + 1) % 3;
-                        updateCarousel();
+                node.addEventListener('mouseleave', () => {
+                    hideTooltip();
+                    locationItems.forEach(item => {
+                        item.classList.remove('border-spek-accent/30', 'bg-[#181818]');
                     });
-                }
+                });
+            });
 
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', () => {
-                        currentIndex = (currentIndex - 1 + 3) % 3;
-                        updateCarousel();
-                    });
-                }
-            }
+            // List Items Event Listeners
+            locationItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const targetNodeId = item.getAttribute('data-target-node');
+                    const targetNode = document.getElementById(targetNodeId);
+                    if (targetNode) {
+                        showTooltip(targetNode);
+                        targetNode.style.transform = 'scale(1.15)';
+                        // Add glow/accent border to target item
+                        item.classList.add('border-spek-accent/30', 'bg-[#181818]');
+                    }
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    const targetNodeId = item.getAttribute('data-target-node');
+                    const targetNode = document.getElementById(targetNodeId);
+                    if (targetNode) {
+                        hideTooltip();
+                        targetNode.style.transform = 'scale(1)';
+                    }
+                    item.classList.remove('border-spek-accent/30', 'bg-[#181818]');
+                });
+            });
         });
     </script>
     
