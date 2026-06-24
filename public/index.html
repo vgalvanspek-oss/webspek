@@ -1210,7 +1210,7 @@
 
                     <!-- Counter + dots -->
                     <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:80px;">
-                        <span id="cf-counter" style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.15em;text-align:center;">01 / 15</span>
+                        <span id="cf-counter" style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.15em;text-align:center;">01 / 12</span>
                         <div id="cf-dots" style="display:flex;gap:4px;"></div>
                     </div>
 
@@ -1253,10 +1253,7 @@
             { type:'img',   src:'assets/e8.jpg'  },
             { type:'img',   src:'assets/e9.jpg'  },
             { type:'img',   src:'assets/e10.jpg' },
-            { type:'img',   src:'assets/e12.jpg' },
-            { type:'img',   src:'assets/e15.jpg' },
-            { type:'img',   src:'assets/e27.jpg' },
-            { type:'img',   src:'assets/e30.jpg' }
+            { type:'img',   src:'assets/e12.jpg' }
         ];
         var N = ITEMS.length, cur = 0;
         var offset = 340;
@@ -1914,7 +1911,7 @@
 
             const plcLbVideo   = document.getElementById('plc-lb-video');
 
-            let plcActive = 'hornos';
+            let plcActive = 'pretratamiento';
             let plcLbImages = [];
             let plcLbIdx    = 0;
 
@@ -1959,7 +1956,7 @@
                 if (!plcGalleryScroll) return;
                 
                 // Add a start spacer so the first image can align to center
-                let html = '<div class="shrink-0 w-[calc(50%-120px)] sm:w-[calc(50%-200px)]"></div>';
+                let html = '<div id="plc-gallery-start-spacer" class="shrink-0"></div>';
                 let globalIndex = 0;
                 
                 categories.forEach((catKey, catIdx) => {
@@ -1988,10 +1985,34 @@
                 });
                 
                 // Add an end spacer so the last image can align to center
-                html += '<div class="shrink-0 w-[calc(50%-120px)] sm:w-[calc(50%-200px)]"></div>';
+                html += '<div id="plc-gallery-end-spacer" class="shrink-0"></div>';
                 
                 plcGalleryScroll.innerHTML = html;
+                plcResizeSpacers();
             }
+
+            // ── Dynamic Spacers sizing based on active card width ──
+            function plcResizeSpacers() {
+                const startSpacer = document.getElementById('plc-gallery-start-spacer');
+                const endSpacer = document.getElementById('plc-gallery-end-spacer');
+                const cards = plcGalleryScroll.querySelectorAll('.plc-gallery-card');
+                if (cards.length > 0) {
+                    const firstCard = cards[0];
+                    const lastCard = cards[cards.length - 1];
+                    const containerWidth = plcGalleryScroll.clientWidth;
+                    if (startSpacer) {
+                        startSpacer.style.width = `${(containerWidth - firstCard.clientWidth) / 2}px`;
+                    }
+                    if (endSpacer) {
+                        endSpacer.style.width = `${(containerWidth - lastCard.clientWidth) / 2}px`;
+                    }
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                plcResizeSpacers();
+                updateFeaturedImageOnScroll();
+            });
 
             // ── Track and Animate the "Floating & Main" centered image ──
             function updateFeaturedImageOnScroll() {
@@ -2051,6 +2072,7 @@
                 if (!f3Card || !plcGalleryScroll) return;
                 
                 const performScroll = () => {
+                    plcResizeSpacers();
                     const targetScroll = f3Card.offsetLeft - (plcGalleryScroll.clientWidth - f3Card.clientWidth) / 2;
                     plcGalleryScroll.scrollTo({
                         left: targetScroll,
@@ -2215,6 +2237,7 @@
 
             // Init
             plcInitGallery();
+            plcResizeSpacers();
             plcApplyTabStyles();
             plcUpdateInfoPanel();
             updateActivePkgOnScroll();
