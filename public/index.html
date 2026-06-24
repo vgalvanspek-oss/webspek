@@ -887,22 +887,69 @@
         </div>
     </section>
 
-    <!-- Paint Line Components Section (Interactive Gallery) -->
-    <section class="py-24 bg-black relative overflow-hidden">
+    <!-- Paint Line Components — Tab Gallery -->
+    <section id="linea-pintura" class="py-24 bg-black relative overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,77,0,0.05),transparent_40%)] pointer-events-none"></div>
         <div class="max-w-[1400px] mx-auto px-6 relative z-10">
-            <div class="mb-16 text-center reveal-on-scroll">
+
+            <!-- Section header -->
+            <div class="mb-14 text-center reveal-on-scroll">
                 <span class="text-spek-accent font-mono text-xs tracking-widest uppercase mb-2 block">Ingeniería Integrada</span>
                 <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Componentes de una Línea de Pintura</h2>
                 <p class="text-gray-400 max-w-2xl mx-auto">Fabricamos, instalamos y modernizamos cada etapa crítica del proceso de acabado industrial para garantizar calidad y consistencia.</p>
             </div>
-            
-            <!-- Dynamic Components Grid Gallery -->
-            <div id="paint-components-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Injected dynamically by Javascript -->
+
+            <!-- Category tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal-on-scroll" role="tablist" id="plc-tabs">
+                <button role="tab" aria-selected="false" data-plc="pretratamiento" class="plc-tab plc-tab-active px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
+                    Pretratamiento
+                </button>
+                <button role="tab" aria-selected="true" data-plc="hornos"         class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
+                    Hornos
+                </button>
+                <button role="tab" aria-selected="false" data-plc="cabinas"        class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
+                    Cabinas
+                </button>
+                <button role="tab" aria-selected="false" data-plc="transportacion" class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
+                    Transportación
+                </button>
+            </div>
+
+            <!-- Panel content (description + gallery grid) -->
+            <div id="plc-panel" class="reveal-on-scroll stagger-1">
+                <!-- Injected by JS -->
             </div>
         </div>
     </section>
+
+    <!-- Lightbox for paint-line gallery -->
+    <div id="plc-lb-overlay" class="fixed inset-0 z-[9999] bg-black/96 backdrop-blur-sm flex flex-col opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
+            <div class="flex items-center gap-3">
+                <span class="w-1 h-6 bg-spek-accent rounded-full"></span>
+                <h3 id="plc-lb-title" class="text-white font-bold text-base"></h3>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="plc-lb-counter" class="text-gray-400 font-mono text-sm"></span>
+                <button id="plc-lb-close" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition-all" aria-label="Cerrar">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-center relative overflow-hidden px-16 py-6">
+            <button id="plc-lb-prev" class="absolute left-4 z-10 w-12 h-12 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white hover:bg-spek-accent hover:border-spek-accent transition-all duration-200" aria-label="Anterior">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <img id="plc-lb-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-opacity duration-200" style="max-height:calc(100vh - 180px);">
+            <button id="plc-lb-next" class="absolute right-4 z-10 w-12 h-12 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white hover:bg-spek-accent hover:border-spek-accent transition-all duration-200" aria-label="Siguiente">
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="shrink-0 flex flex-col items-center gap-3 pb-5 px-4">
+            <p id="plc-lb-caption" class="text-gray-400 text-sm text-center max-w-xl"></p>
+            <div id="plc-lb-dots" class="flex items-center gap-2"></div>
+        </div>
+    </div>
 
     <!-- ADN Corporativo -->
     <section class="py-24 bg-[#080808] border-t border-white/5 relative">
@@ -1755,102 +1802,182 @@
                                 card.style.setProperty('--mouse-x', `${x}px`);
                                 card.style.setProperty('--mouse-y', `${y}px`);
                             });
-             // Paint Lines Gallery Logic
-            const galleryGrid = document.getElementById('paint-components-gallery');
-
-            const stagesData = [
-                {
-                    title: "Pretratamiento Químico",
-                    desc: "Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura.",
-                    image: "assets/hornos.jpg",
-                    specs: [
-                        { label: "Material", val: "Acero Inox 304", icon: "shield-check" },
-                        { label: "Proceso", val: "Aspersión / Inmersión", icon: "layers" },
-                        { label: "Boquillas", val: "Clip Rápido Reg.", icon: "spray-can" }
-                    ]
-                },
-                {
-                    title: "Hornos de Curado y Secado",
-                    desc: "Nuestros hornos industriales de convección ofrecen un flujo de aire dinámico y uniforme de recirculación, asegurando que la pintura alcance su temperatura de curado ideal sin variaciones ni pérdidas térmicas.",
-                    image: "assets/spek_descarga.png",
-                    specs: [
-                        { label: "Temperatura", val: "Hasta 250°C", icon: "thermometer" },
-                        { label: "Quemador", val: "Gas Modulante", icon: "flame" },
-                        { label: "Aislamiento", val: "Lana Mineral 6''", icon: "layers" }
-                    ]
-                },
-                {
-                    title: "Cabinas de Aplicación",
-                    desc: "Fabricamos cabinas de aplicación presurizadas y controladas. Para pintura electrostática, incorporamos colectores de cartucho y ciclones de recuperación (99.7% eficiencia), y cascada de agua para líquida.",
-                    image: "assets/cabinas.jpg",
-                    specs: [
-                        { label: "Tipo", val: "Cambio Rápido Color", icon: "refresh-cw" },
-                        { label: "Eficiencia", val: "99.7% Recuperación", icon: "award" },
-                        { label: "Seguridad", val: "Norma ATEX / NFPA", icon: "shield-alert" }
-                    ]
-                },
-                {
-                    title: "Sistemas de Transportación",
-                    desc: "La continuidad de la línea depende del transportador. Diseñamos circuitos monorrieles aéreos continuos de alta resistencia (cadenas X348 / X458) y transportadores sobre suelo automatizados.",
-                    image: "assets/pretratamiento.jpg",
-                    specs: [
-                        { label: "Cadenas", val: "Tipo X348 / X458", icon: "link" },
-                        { label: "Control", val: "Variador VFD", icon: "cpu" },
-                        { label: "Lubricación", val: "Automática Neum.", icon: "droplet" }
-                    ]
-                }
-            ];
-
-            if (galleryGrid) {
-                galleryGrid.innerHTML = stagesData.map((item, idx) => {
-                    return `
-                        <div class="group relative bg-[#0c0c0c] border border-white/10 rounded-2xl overflow-hidden shadow-2xl hover:border-spek-accent/30 transition-all duration-500 flex flex-col h-full reveal-on-scroll" style="animation-delay: ${idx * 0.1}s;">
-                            <!-- Top Image Container -->
-                            <div class="relative h-[220px] w-full overflow-hidden bg-gray-900 border-b border-white/5">
-                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent z-10"></div>
-                            </div>
-                            
-                            <!-- Content Body -->
-                            <div class="p-6 flex flex-col flex-grow justify-between">
-                                <div class="mb-6">
-                                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-spek-accent transition-colors duration-300 font-sans">${item.title}</h3>
-                                    <p class="text-gray-400 text-sm leading-relaxed font-sans">${item.desc}</p>
-                                </div>
-                                
-                                <div>
-                                    <div class="h-px bg-white/10 mb-4"></div>
-                                    <!-- Specs list -->
-                                    <div class="space-y-3">
-                                        ${item.specs.map(spec => `
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-7 h-7 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
-                                                    <i data-lucide="${spec.icon}" class="w-3.5 h-3.5"></i>
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <div class="text-[9px] font-mono text-gray-500 uppercase tracking-wider">${spec.label}</div>
-                                                    <div class="text-xs font-bold text-white truncate">${spec.val}</div>
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Accent Line -->
-                            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-                        </div>
-                    `;
-                }).join('');
-
-                // Observe newly injected elements for scroll reveal animations
-                if (typeof observer !== 'undefined') {
-                    galleryGrid.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
-                }
-
-                // Re-initialize lucide icons for newly added HTML
-                if (window.lucide) {
-                    lucide.createIcons();
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
             }
+
+            // ── Paint Line Components — Tab Gallery ────────────────────────────────
+            const PLC_DATA = {
+                pretratamiento: {
+                    title: 'Pretratamiento Químico',
+                    desc:  'Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura. Fabricados en acero inoxidable 304, con boquillas de clip rápido y colectores de escurrimiento.',
+                    images: [
+                        { src: 'assets/e13.jpg',           caption: 'Interior de túnel de aspersión multi-etapa' },
+                        { src: 'assets/e21.jpg',           caption: 'Sistema de boquillas de aspersión' },
+                        { src: 'assets/e23.jpg',           caption: 'Interior con boquillas clip rápido' },
+                        { src: 'assets/e14.jpg',           caption: 'Servicio y carga química en tina de inmersión' },
+                        { src: 'assets/pretratamiento.jpg',caption: 'Túnel de pretratamiento instalado' }
+                    ]
+                },
+                hornos: {
+                    title: 'Hornos de Curado y Secado',
+                    desc:  'Nuestros hornos industriales de convección ofrecen un flujo de aire dinámico y uniforme de recirculación, asegurando que la pintura alcance su temperatura de curado ideal sin variaciones ni pérdidas térmicas. Temperatura hasta 250 °C, quemador a gas modulante, aislamiento de lana mineral 6".',
+                    images: [
+                        { src: 'assets/e16.jpg',           caption: 'Horno vertical con estructura naranja y bastidores' },
+                        { src: 'assets/e19.jpg',           caption: 'Horno de curado con cadena y bastidores internos' },
+                        { src: 'assets/e20.jpg',           caption: 'Horno de curado con ventilación lateral y cadena' },
+                        { src: 'assets/e22.jpg',           caption: 'Tren de hornos y cabina en línea' },
+                        { src: 'assets/hornos.jpg',        caption: 'Horno de curado instalado en planta' },
+                        { src: 'assets/spek_descarga.png', caption: 'Zona de descarga con control de temperatura' }
+                    ]
+                },
+                cabinas: {
+                    title: 'Cabinas de Aplicación',
+                    desc:  'Fabricamos cabinas de aplicación presurizadas y controladas. Para pintura electrostática incorporamos colectores de cartucho y ciclones de recuperación (99.7 % eficiencia), y cascada de agua para pintura líquida. Cumplen norma ATEX / NFPA con cambio rápido de color.',
+                    images: [
+                        { src: 'assets/e15.jpg',           caption: 'Interior de horno — vista técnica del ingeniero Spek' },
+                        { src: 'assets/e27.jpg',           caption: 'Inspección de cabina por personal Spek' },
+                        { src: 'assets/cabinas.jpg',       caption: 'Cabina de pintura electrostática instalada' }
+                    ]
+                },
+                transportacion: {
+                    title: 'Sistemas de Transportación',
+                    desc:  'La continuidad de la línea depende del transportador. Diseñamos circuitos monorrieles aéreos continuos de alta resistencia (cadenas X348 / X458) y transportadores sobre suelo automatizados con variador VFD y lubricación automática neumática.',
+                    images: [
+                        { src: 'assets/e25.jpg',           caption: 'Monorriel aéreo con cadena sobre horno y cabina' },
+                        { src: 'assets/e26.jpg',           caption: 'Cabinas y línea de transportación completa' },
+                        { src: 'assets/transportacion.jpg',caption: 'Sistema de transportación monorriel instalado' }
+                    ]
+                }
+            };
+
+            const plcPanel  = document.getElementById('plc-panel');
+            const plcTabs   = document.querySelectorAll('.plc-tab');
+
+            // Lightbox elements (new IDs in HTML)
+            const plcLbOverlay = document.getElementById('plc-lb-overlay');
+            const plcLbImg     = document.getElementById('plc-lb-img');
+            const plcLbCaption = document.getElementById('plc-lb-caption');
+            const plcLbTitle   = document.getElementById('plc-lb-title');
+            const plcLbCounter = document.getElementById('plc-lb-counter');
+            const plcLbPrev    = document.getElementById('plc-lb-prev');
+            const plcLbNext    = document.getElementById('plc-lb-next');
+            const plcLbClose   = document.getElementById('plc-lb-close');
+            const plcLbDots    = document.getElementById('plc-lb-dots');
+
+            let plcActive = 'hornos';
+            let plcLbImages = [];
+            let plcLbIdx    = 0;
+
+            // ── Tab styles ──
+            function plcApplyTabStyles() {
+                plcTabs.forEach(btn => {
+                    const active = btn.dataset.plc === plcActive;
+                    btn.className = 'plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300 '
+                        + (active
+                            ? 'bg-spek-accent border-spek-accent text-black'
+                            : 'bg-transparent border-white/20 text-gray-400 hover:border-white/50 hover:text-white');
+                    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+                });
+            }
+
+            // ── Render panel ──
+            function plcRenderPanel() {
+                const d = PLC_DATA[plcActive];
+                if (!plcPanel || !d) return;
+                plcPanel.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                        <!-- Info -->
+                        <div class="lg:col-span-4">
+                            <h3 class="text-2xl font-bold text-white mb-4">${d.title}</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">${d.desc}</p>
+                            <div class="text-xs font-mono text-gray-500 uppercase tracking-widest">${d.images.length} foto${d.images.length !== 1 ? 's' : ''} — clic para ampliar</div>
+                        </div>
+                        <!-- Gallery grid -->
+                        <div class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-3 items-start">
+                            ${d.images.map((img, i) => `
+                                <div class="group relative rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 hover:border-spek-accent/50 transition-all duration-300"
+                                     onclick="plcOpenLb(${i})" role="button" tabindex="0" aria-label="${img.caption}">
+                                    <img src="${img.src}" alt="${img.caption}"
+                                         class="w-full h-auto block transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                                        <span class="text-white text-[11px] leading-tight font-sans">${img.caption}</span>
+                                    </div>
+                                    <div class="absolute inset-0 ring-0 group-hover:ring-1 ring-spek-accent/40 rounded-xl transition-all duration-300 pointer-events-none"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+                if (window.lucide) lucide.createIcons();
+            }
+
+            // ── Lightbox ──
+            function plcOpenLb(startIdx) {
+                plcLbImages = PLC_DATA[plcActive].images;
+                plcLbIdx    = startIdx;
+                plcLbTitle.textContent = PLC_DATA[plcActive].title;
+                plcLbImg.style.transition = 'opacity 0.18s ease';
+                plcGoTo(startIdx);
+                plcLbOverlay.classList.remove('opacity-0','pointer-events-none');
+                plcLbOverlay.classList.add('opacity-100');
+                document.body.style.overflow = 'hidden';
+            }
+            window.plcOpenLb = plcOpenLb;
+
+            function plcCloseLb() {
+                plcLbOverlay.classList.add('opacity-0','pointer-events-none');
+                plcLbOverlay.classList.remove('opacity-100');
+                document.body.style.overflow = '';
+            }
+
+            function plcGoTo(idx) {
+                plcLbIdx = (idx + plcLbImages.length) % plcLbImages.length;
+                const item = plcLbImages[plcLbIdx];
+                plcLbImg.style.opacity = '0';
+                setTimeout(() => {
+                    plcLbImg.src = item.src;
+                    plcLbImg.alt = item.caption;
+                    plcLbCaption.textContent = item.caption;
+                    plcLbCounter.textContent = `${plcLbIdx + 1} / ${plcLbImages.length}`;
+                    plcLbImg.style.opacity = '1';
+                }, 180);
+                // dots
+                plcLbDots.innerHTML = plcLbImages.map((_, i) =>
+                    `<button class="w-2 h-2 rounded-full transition-all duration-300 ${i === plcLbIdx ? 'bg-spek-accent scale-125' : 'bg-white/30'}" onclick="plcGoTo(${i})" aria-label="Imagen ${i+1}"></button>`
+                ).join('');
+            }
+            window.plcGoTo = plcGoTo;
+
+            if (plcLbClose) plcLbClose.addEventListener('click', plcCloseLb);
+            if (plcLbPrev)  plcLbPrev.addEventListener('click', () => plcGoTo(plcLbIdx - 1));
+            if (plcLbNext)  plcLbNext.addEventListener('click', () => plcGoTo(plcLbIdx + 1));
+            if (plcLbOverlay) plcLbOverlay.addEventListener('click', e => { if (e.target === plcLbOverlay) plcCloseLb(); });
+            document.addEventListener('keydown', e => {
+                if (!plcLbOverlay || plcLbOverlay.classList.contains('pointer-events-none')) return;
+                if (e.key === 'Escape')      plcCloseLb();
+                if (e.key === 'ArrowLeft')   plcGoTo(plcLbIdx - 1);
+                if (e.key === 'ArrowRight')  plcGoTo(plcLbIdx + 1);
+            });
+
+            // ── Tab click ──
+            plcTabs.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    plcActive = btn.dataset.plc;
+                    plcApplyTabStyles();
+                    plcRenderPanel();
+                });
+            });
+
+            // Init
+            plcApplyTabStyles();
+            plcRenderPanel();
+
+            // Also remove the old pc-gallery-overlay if it exists (leftover)
+            const oldOverlay = document.getElementById('pc-gallery-overlay');
+            if (oldOverlay) oldOverlay.remove();
 
             // --- Services Carousel Logic ---
             const servicesContainer = document.getElementById('cards-container');
