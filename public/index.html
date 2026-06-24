@@ -897,104 +897,9 @@
                 <p class="text-gray-400 max-w-2xl mx-auto">Fabricamos, instalamos y modernizamos cada etapa crítica del proceso de acabado industrial para garantizar calidad y consistencia.</p>
             </div>
             
-            <!-- Interactive Split Screen Gallery -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                
-                <!-- Left Navigation Panel (5 cols) -->
-                <div class="lg:col-span-5 flex flex-col gap-4 order-2 lg:order-1">
-                    
-                    <!-- Tab Button 1 -->
-                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden active-tab" data-stage="0">
-                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
-                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">01</span>
-                        <div>
-                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Pretratamiento Químico</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Túneles de lavado por aspersión o tinas de inmersión para limpieza profunda.</p>
-                        </div>
-                    </button>
-
-                    <!-- Tab Button 2 -->
-                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden" data-stage="1">
-                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
-                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">02</span>
-                        <div>
-                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Hornos de Curado y Secado</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Hornos industriales de convección de gas o eléctricos con estabilidad térmica.</p>
-                        </div>
-                    </button>
-
-                    <!-- Tab Button 3 -->
-                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden" data-stage="2">
-                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
-                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">03</span>
-                        <div>
-                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Cabinas de Aplicación</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Cabinas presurizadas para pintura en polvo y líquida de alta transferencia.</p>
-                        </div>
-                    </button>
-
-                    <!-- Tab Button 4 -->
-                    <button class="paint-tab-btn group text-left p-6 rounded-2xl bg-[#121212] border border-white/5 hover:border-spek-accent/30 hover:bg-[#181818] transition-all duration-300 flex items-start gap-4 relative overflow-hidden" data-stage="3">
-                        <div class="w-1 bg-transparent group-[.active-tab]:bg-spek-accent absolute left-0 top-0 bottom-0 transition-colors duration-300"></div>
-                        <span class="text-2xl font-mono text-gray-600 group-[.active-tab]:text-spek-accent transition-colors shrink-0">04</span>
-                        <div>
-                            <h3 class="text-lg font-bold text-white mb-1 group-[.active-tab]:text-spek-accent transition-colors">Sistemas de Transportación</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Monorrieles aéreos y transportadores continuos de carga pesada.</p>
-                        </div>
-                    </button>
-                    
-                </div>
-                
-                <!-- Right Showcase Panel (7 cols) -->
-                <div class="lg:col-span-7 flex flex-col gap-6 order-1 lg:order-2">
-                    <!-- Image Card with Overlay -->
-                    <div class="relative h-[300px] md:h-[400px] w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-gray-900 group">
-                        <img id="gallery-image" src="assets/hornos.jpg" alt="Pretratamiento Químico" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10"></div>
-                    </div>
-
-                    <!-- Ficha Técnica (Specifications Container) -->
-                    <div class="bg-[#121212] border border-white/10 p-6 md:p-8 rounded-2xl transition-all duration-500">
-                        <h4 id="gallery-title" class="text-2xl font-bold text-white mb-4">Pretratamiento Químico</h4>
-                        <p id="gallery-desc" class="text-gray-400 text-sm mb-6 leading-relaxed font-sans">
-                            Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura.
-                        </p>
-                        
-                        <div class="h-px bg-white/10 mb-6"></div>
-
-                        <!-- Specs Grid -->
-                        <div id="gallery-specs" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
-                                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-mono text-gray-500 uppercase">Material</div>
-                                    <div class="text-sm font-bold text-white">Acero Inox 304</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
-                                    <i data-lucide="layers" class="w-4 h-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-mono text-gray-500 uppercase">Proceso</div>
-                                    <div class="text-sm font-bold text-white">Aspersión / Inmersión</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
-                                    <i data-lucide="spray-can" class="w-4 h-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-mono text-gray-500 uppercase">Boquillas</div>
-                                    <div class="text-sm font-bold text-white">Clip Rápido Reg.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- Dynamic Components Grid Gallery -->
+            <div id="paint-components-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Injected dynamically by Javascript -->
             </div>
         </div>
     </section>
@@ -1850,19 +1755,8 @@
                                 card.style.setProperty('--mouse-x', `${x}px`);
                                 card.style.setProperty('--mouse-y', `${y}px`);
                             });
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-            }
-
-            // Paint Lines Gallery Logic
-            const tabButtons = document.querySelectorAll('.paint-tab-btn');
-            const galleryImage = document.getElementById('gallery-image');
-            const galleryTitle = document.getElementById('gallery-title');
-            const galleryDesc = document.getElementById('gallery-desc');
-            const gallerySpecs = document.getElementById('gallery-specs');
+             // Paint Lines Gallery Logic
+            const galleryGrid = document.getElementById('paint-components-gallery');
 
             const stagesData = [
                 {
@@ -1907,61 +1801,55 @@
                 }
             ];
 
-            if (tabButtons.length > 0 && galleryImage) {
-                tabButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Remove active class from all
-                        tabButtons.forEach(b => b.classList.remove('active-tab'));
-                        // Add active class to clicked
-                        btn.classList.add('active-tab');
-
-                        const stageIndex = parseInt(btn.getAttribute('data-stage'));
-                        const data = stagesData[stageIndex];
-
-                        // Smooth transition: fade out, change, fade in
-                        const rightPanel = galleryImage.closest('.lg\\:col-span-7');
-                        if (rightPanel) {
-                            rightPanel.style.opacity = '0.3';
-                            rightPanel.style.transform = 'translateY(10px)';
-                            rightPanel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                        }
-
-                        setTimeout(() => {
-                            // Update content
-                            galleryImage.src = data.image;
-                            galleryImage.alt = data.title;
-                            galleryTitle.textContent = data.title;
-                            galleryDesc.textContent = data.desc;
-
-                            // Rebuild specs grid
-                            gallerySpecs.innerHTML = '';
-                            data.specs.forEach(spec => {
-                                const specDiv = document.createElement('div');
-                                specDiv.className = 'flex items-center gap-3';
-                                specDiv.innerHTML = `
-                                    <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
-                                        <i data-lucide="${spec.icon}" class="w-4 h-4"></i>
+            if (galleryGrid) {
+                galleryGrid.innerHTML = stagesData.map((item, idx) => {
+                    return `
+                        <div class="group relative bg-[#0c0c0c] border border-white/10 rounded-2xl overflow-hidden shadow-2xl hover:border-spek-accent/30 transition-all duration-500 flex flex-col h-full reveal-on-scroll" style="animation-delay: ${idx * 0.1}s;">
+                            <!-- Top Image Container -->
+                            <div class="relative h-[220px] w-full overflow-hidden bg-gray-900 border-b border-white/5">
+                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent z-10"></div>
+                            </div>
+                            
+                            <!-- Content Body -->
+                            <div class="p-6 flex flex-col flex-grow justify-between">
+                                <div class="mb-6">
+                                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-spek-accent transition-colors duration-300 font-sans">${item.title}</h3>
+                                    <p class="text-gray-400 text-sm leading-relaxed font-sans">${item.desc}</p>
+                                </div>
+                                
+                                <div>
+                                    <div class="h-px bg-white/10 mb-4"></div>
+                                    <!-- Specs list -->
+                                    <div class="space-y-3">
+                                        ${item.specs.map(spec => `
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-7 h-7 rounded bg-white/5 flex items-center justify-center text-spek-accent shrink-0">
+                                                    <i data-lucide="${spec.icon}" class="w-3.5 h-3.5"></i>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="text-[9px] font-mono text-gray-500 uppercase tracking-wider">${spec.label}</div>
+                                                    <div class="text-xs font-bold text-white truncate">${spec.val}</div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
                                     </div>
-                                    <div>
-                                        <div class="text-[10px] font-mono text-gray-500 uppercase">${spec.label}</div>
-                                        <div class="text-sm font-bold text-white">${spec.val}</div>
-                                    </div>
-                                `;
-                                gallerySpecs.appendChild(specDiv);
-                            });
+                                </div>
+                            </div>
+                            <!-- Accent Line -->
+                            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-spek-accent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                        </div>
+                    `;
+                }).join('');
 
-                            // Re-initialize lucide icons for newly added HTML
-                            if (window.lucide) {
-                                lucide.createIcons();
-                            }
+                // Observe newly injected elements for scroll reveal animations
+                if (typeof observer !== 'undefined') {
+                    galleryGrid.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+                }
 
-                            if (rightPanel) {
-                                rightPanel.style.opacity = '1';
-                                rightPanel.style.transform = 'translateY(0)';
-                            }
-                        }, 250);
-                    });
-                });
+                // Re-initialize lucide icons for newly added HTML
+                if (window.lucide) {
+                    lucide.createIcons();
             }
 
             // --- Services Carousel Logic ---
