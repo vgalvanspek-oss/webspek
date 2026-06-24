@@ -2031,16 +2031,30 @@
             // ── Scroll to center e19.jpg on load ──
             function plcScrollToE19() {
                 const e19Card = document.getElementById('plc-card-e19');
-                if (e19Card && plcGalleryScroll) {
-                    setTimeout(() => {
-                        const targetScroll = e19Card.offsetLeft - plcGalleryScroll.offsetLeft - (plcGalleryScroll.clientWidth - e19Card.clientWidth) / 2;
-                        plcGalleryScroll.scrollTo({
-                            left: targetScroll,
-                            behavior: 'auto' // instant scroll on load
-                        });
-                        updateFeaturedImageOnScroll();
-                    }, 50);
-                }
+                if (!e19Card || !plcGalleryScroll) return;
+                
+                const performScroll = () => {
+                    const targetScroll = e19Card.offsetLeft - plcGalleryScroll.offsetLeft - (plcGalleryScroll.clientWidth - e19Card.clientWidth) / 2;
+                    plcGalleryScroll.scrollTo({
+                        left: targetScroll,
+                        behavior: 'auto' // instant scroll
+                    });
+                    updateFeaturedImageOnScroll();
+                };
+                
+                // Try instantly
+                performScroll();
+                
+                // Try on window load when all assets are loaded
+                window.addEventListener('load', performScroll);
+                
+                // Poll a few times during first 1.5 seconds in case of slow image loads/layout shifts
+                let count = 0;
+                const interval = setInterval(() => {
+                    performScroll();
+                    count++;
+                    if (count > 15) clearInterval(interval);
+                }, 100);
             }
 
             // ── Track Package highlight on Scroll ──
