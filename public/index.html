@@ -2034,7 +2034,7 @@
                 if (!e19Card || !plcGalleryScroll) return;
                 
                 const performScroll = () => {
-                    const targetScroll = e19Card.offsetLeft - plcGalleryScroll.offsetLeft - (plcGalleryScroll.clientWidth - e19Card.clientWidth) / 2;
+                    const targetScroll = e19Card.offsetLeft - (plcGalleryScroll.clientWidth - e19Card.clientWidth) / 2;
                     plcGalleryScroll.scrollTo({
                         left: targetScroll,
                         behavior: 'auto' // instant scroll
@@ -2062,7 +2062,6 @@
             function updateActivePkgOnScroll() {
                 if (!plcGalleryScroll) return;
                 const scrollLeft = plcGalleryScroll.scrollLeft;
-                const containerOffset = plcGalleryScroll.offsetLeft;
                 
                 const pkgs = [1, 2, 3, 4].map(num => document.getElementById(`plc-pkg-${num}`));
                 let activeIndex = 0;
@@ -2070,7 +2069,7 @@
                 
                 pkgs.forEach((pkg, index) => {
                     if (!pkg) return;
-                    const pkgLeft = pkg.offsetLeft - containerOffset;
+                    const pkgLeft = pkg.offsetLeft;
                     const diff = Math.abs(pkgLeft - scrollLeft);
                     if (diff < minDiff) {
                         minDiff = diff;
@@ -2108,7 +2107,7 @@
                     const pkgNum = btn.dataset.pkg;
                     const pkgElem = document.getElementById(`plc-pkg-${pkgNum}`);
                     if (pkgElem && plcGalleryScroll) {
-                        const targetScroll = pkgElem.offsetLeft - plcGalleryScroll.offsetLeft - (plcGalleryScroll.clientWidth - pkgElem.clientWidth) / 2;
+                        const targetScroll = pkgElem.offsetLeft - (plcGalleryScroll.clientWidth - pkgElem.clientWidth) / 2;
                         plcGalleryScroll.scrollTo({
                             left: targetScroll,
                             behavior: 'smooth'
