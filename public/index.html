@@ -917,7 +917,35 @@
 
             <!-- Panel content (description + gallery grid) -->
             <div id="plc-panel" class="reveal-on-scroll stagger-1">
-                <!-- Injected by JS -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    <!-- Info -->
+                    <div class="lg:col-span-4" id="plc-info-panel">
+                        <!-- Injected by JS -->
+                    </div>
+                    <!-- Gallery -->
+                    <div class="lg:col-span-8">
+                        <!-- Gallery container with horizontal scroll -->
+                        <div id="plc-gallery-scroll" class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth relative"
+                             style="scrollbar-width:thin;scrollbar-color:rgba(255,77,0,0.3) transparent;">
+                             <!-- Injected by JS -->
+                        </div>
+                        <!-- Controls: Prev, 1, 2, 3, 4, Next -->
+                        <div class="flex justify-center items-center gap-4 mt-6">
+                            <button id="plc-slide-prev" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:border-spek-accent/50 hover:bg-spek-accent/10 transition-all duration-300" aria-label="Anterior">
+                                <i data-lucide="chevron-left" class="w-5 h-5 font-bold"></i>
+                            </button>
+                            <div class="flex gap-2" id="plc-pkg-dots">
+                                <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-spek-accent text-white bg-spek-accent/20" data-pkg="1">1</button>
+                                <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="2">2</button>
+                                <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="3">3</button>
+                                <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="4">4</button>
+                            </div>
+                            <button id="plc-slide-next" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:border-spek-accent/50 hover:bg-spek-accent/10 transition-all duration-300" aria-label="Siguiente">
+                                <i data-lucide="chevron-right" class="w-5 h-5 font-bold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1854,8 +1882,9 @@
                 }
             };
 
-            const plcPanel  = document.getElementById('plc-panel');
             const plcTabs   = document.querySelectorAll('.plc-tab');
+            const plcInfoPanel = document.getElementById('plc-info-panel');
+            const plcGalleryScroll = document.getElementById('plc-gallery-scroll');
 
             // Lightbox elements (new IDs in HTML)
             const plcLbOverlay = document.getElementById('plc-lb-overlay');
@@ -1872,6 +1901,19 @@
             let plcLbImages = [];
             let plcLbIdx    = 0;
 
+            // Flatten all PLC images for continuous slider and lightbox
+            const ALL_PLC_IMAGES = [];
+            const categories = ['pretratamiento', 'hornos', 'cabinas', 'transportacion'];
+            categories.forEach(catKey => {
+                PLC_DATA[catKey].images.forEach(img => {
+                    ALL_PLC_IMAGES.push({
+                        ...img,
+                        category: catKey,
+                        categoryTitle: PLC_DATA[catKey].title
+                    });
+                });
+            });
+
             // ── Tab styles ──
             function plcApplyTabStyles() {
                 plcTabs.forEach(btn => {
@@ -1884,42 +1926,121 @@
                 });
             }
 
-            // ── Render panel ──
-            function plcRenderPanel() {
+            // ── Update info panel text ──
+            function plcUpdateInfoPanel() {
                 const d = PLC_DATA[plcActive];
-                if (!plcPanel || !d) return;
-                plcPanel.innerHTML = `
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-                        <!-- Info -->
-                        <div class="lg:col-span-4">
-                            <h3 class="text-2xl font-bold text-white mb-4">${d.title}</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-6">${d.desc}</p>
-                            <div class="text-xs font-mono text-gray-500 uppercase tracking-widest">${d.images.length} foto${d.images.length !== 1 ? 's' : ''} — clic para ampliar</div>
-                        </div>
-                        <!-- Gallery: horizontal scroll on mobile, grid on desktop -->
-                        <div class="lg:col-span-8 flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0 items-start"
-                             style="scrollbar-width:thin;scrollbar-color:rgba(255,77,0,0.3) transparent;">
-                            ${d.images.map((img, i) => `
-                                <div class="group relative flex-shrink-0 w-44 sm:w-auto snap-start rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 hover:border-spek-accent/50 transition-all duration-300"
-                                     onclick="plcOpenLb(${i})" role="button" tabindex="0" aria-label="${img.caption}">
-                                    <img src="${img.src}" alt="${img.caption}"
-                                         class="w-full h-auto block transition-transform duration-500 group-hover:scale-105" loading="lazy">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                                        <span class="text-white text-[11px] leading-tight font-sans">${img.caption}</span>
-                                    </div>
-                                    <div class="absolute inset-0 ring-0 group-hover:ring-1 ring-spek-accent/40 rounded-xl transition-all duration-300 pointer-events-none"></div>
+                if (!plcInfoPanel || !d) return;
+                plcInfoPanel.innerHTML = `
+                    <h3 class="text-2xl font-bold text-white mb-4">${d.title}</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">${d.desc}</p>
+                    <div class="text-xs font-mono text-gray-500 uppercase tracking-widest">${d.images.length} foto${d.images.length !== 1 ? 's' : ''} — clic para ampliar</div>
+                `;
+            }
+
+            // ── Initialize continuous gallery ──
+            function plcInitGallery() {
+                if (!plcGalleryScroll) return;
+                let html = '';
+                let globalIndex = 0;
+                
+                categories.forEach((catKey, catIdx) => {
+                    const catData = PLC_DATA[catKey];
+                    catData.images.forEach((img, imgIdx) => {
+                        const isFirstOfPkg = imgIdx === 0;
+                        const idAttr = isFirstOfPkg ? `id="plc-pkg-${catIdx + 1}"` : '';
+                        
+                        html += `
+                            <div ${idAttr} class="group relative flex-shrink-0 snap-start rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 hover:border-spek-accent/50 transition-all duration-300"
+                                 onclick="plcOpenLb(${globalIndex})" role="button" tabindex="0" aria-label="${img.caption}">
+                                <img src="${img.src}" alt="${img.caption}"
+                                     class="h-60 sm:h-80 w-auto block transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                                    <span class="text-white text-[11px] leading-tight font-sans">${img.caption}</span>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
-                if (window.lucide) lucide.createIcons();
+                                <div class="absolute inset-0 ring-0 group-hover:ring-1 ring-spek-accent/40 rounded-xl transition-all duration-300 pointer-events-none"></div>
+                            </div>
+                        `;
+                        globalIndex++;
+                    });
+                });
+                
+                plcGalleryScroll.innerHTML = html;
+            }
+
+            // ── Track Package highlight on Scroll ──
+            let plcScrollTicking = false;
+            function updateActivePkgOnScroll() {
+                if (!plcGalleryScroll) return;
+                const scrollLeft = plcGalleryScroll.scrollLeft;
+                const containerOffset = plcGalleryScroll.offsetLeft;
+                
+                const pkgs = [1, 2, 3, 4].map(num => document.getElementById(`plc-pkg-${num}`));
+                let activeIndex = 0;
+                let minDiff = Infinity;
+                
+                pkgs.forEach((pkg, index) => {
+                    if (!pkg) return;
+                    const pkgLeft = pkg.offsetLeft - containerOffset;
+                    const diff = Math.abs(pkgLeft - scrollLeft);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        activeIndex = index;
+                    }
+                });
+                
+                const buttons = document.querySelectorAll('.plc-pkg-btn');
+                buttons.forEach((btn, index) => {
+                    const active = index === activeIndex;
+                    if (active) {
+                        btn.className = 'plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-spek-accent text-white bg-spek-accent/20';
+                    } else {
+                        btn.className = 'plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent';
+                    }
+                });
+            }
+
+            if (plcGalleryScroll) {
+                plcGalleryScroll.addEventListener('scroll', () => {
+                    if (!plcScrollTicking) {
+                        window.requestAnimationFrame(() => {
+                            updateActivePkgOnScroll();
+                            plcScrollTicking = false;
+                        });
+                        plcScrollTicking = true;
+                    }
+                });
+            }
+
+            // ── Scroll Controls ──
+            document.querySelectorAll('.plc-pkg-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pkgNum = btn.dataset.pkg;
+                    const pkgElem = document.getElementById(`plc-pkg-${pkgNum}`);
+                    if (pkgElem && plcGalleryScroll) {
+                        const targetScroll = pkgElem.offsetLeft - plcGalleryScroll.offsetLeft;
+                        plcGalleryScroll.scrollTo({
+                            left: targetScroll,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            const btnPrev = document.getElementById('plc-slide-prev');
+            const btnNext = document.getElementById('plc-slide-next');
+            if (btnPrev && btnNext && plcGalleryScroll) {
+                btnPrev.addEventListener('click', () => {
+                    plcGalleryScroll.scrollBy({ left: -320, behavior: 'smooth' });
+                });
+                btnNext.addEventListener('click', () => {
+                    plcGalleryScroll.scrollBy({ left: 320, behavior: 'smooth' });
+                });
             }
 
             // ── Lightbox ──
             function plcOpenLb(startIdx) {
-                plcLbImages = PLC_DATA[plcActive].images;
+                plcLbImages = ALL_PLC_IMAGES;
                 plcLbIdx    = startIdx;
-                plcLbTitle.textContent = PLC_DATA[plcActive].title;
                 plcLbImg.style.transition = 'opacity 0.18s ease';
                 plcGoTo(startIdx);
                 plcLbOverlay.classList.remove('opacity-0','pointer-events-none');
@@ -1937,6 +2058,7 @@
             function plcGoTo(idx) {
                 plcLbIdx = (idx + plcLbImages.length) % plcLbImages.length;
                 const item = plcLbImages[plcLbIdx];
+                plcLbTitle.textContent = item.categoryTitle;
                 plcLbImg.style.opacity = '0';
                 setTimeout(() => {
                     plcLbImg.src = item.src;
@@ -1968,13 +2090,15 @@
                 btn.addEventListener('click', () => {
                     plcActive = btn.dataset.plc;
                     plcApplyTabStyles();
-                    plcRenderPanel();
+                    plcUpdateInfoPanel();
                 });
             });
 
             // Init
+            plcInitGallery();
             plcApplyTabStyles();
-            plcRenderPanel();
+            plcUpdateInfoPanel();
+            updateActivePkgOnScroll();
 
             // Also remove the old pc-gallery-overlay if it exists (leftover)
             const oldOverlay = document.getElementById('pc-gallery-overlay');
@@ -1987,15 +2111,53 @@
             const servicesDots = document.querySelectorAll('.services-dot');
 
             if (servicesContainer && servicesPrevBtn && servicesNextBtn) {
+                const allCards = servicesContainer.querySelectorAll('.flashlight-card');
+
                 const getCardWidth = () => {
                     const firstCard = servicesContainer.querySelector('.flashlight-card');
-                    return firstCard ? firstCard.clientWidth + 24 : 404; // card width + gap
+                    return firstCard ? firstCard.clientWidth + 24 : 404;
                 };
 
+                // ── Central update: dots + active card highlight ──────────────────
+                let lastActiveIdx = -1;
+                function updateActive(idx) {
+                    if (idx === lastActiveIdx) return;
+                    lastActiveIdx = idx;
+
+                    // Dots
+                    servicesDots.forEach((dot, i) => {
+                        dot.classList.toggle('bg-spek-accent', i === idx);
+                        dot.classList.toggle('bg-white/20',   i !== idx);
+                        dot.classList.toggle('active-dot',    i === idx);
+                    });
+
+                    // Card border highlight
+                    allCards.forEach((card, i) => {
+                        if (i === idx) {
+                            card.classList.add('border-spek-accent/30', 'bg-[#181818]');
+                        } else {
+                            card.classList.remove('border-spek-accent/30', 'bg-[#181818]');
+                        }
+                    });
+                }
+
+                function currentIndex() {
+                    const cw = getCardWidth();
+                    return Math.min(
+                        servicesDots.length - 1,
+                        Math.max(0, Math.round(servicesContainer.scrollLeft / cw))
+                    );
+                }
+
+                // ── Scroll ──────────────────────────────────────────────────────
+                servicesContainer.addEventListener('scroll', () => {
+                    updateActive(currentIndex());
+                }, { passive: true });
+
+                // ── Navigation ──────────────────────────────────────────────────
                 const scrollToNext = () => {
                     const cardWidth = getCardWidth();
                     const maxScrollLeft = servicesContainer.scrollWidth - servicesContainer.clientWidth;
-                    // If we are at the end (with a safety margin of 10px), wrap around to 0
                     if (servicesContainer.scrollLeft >= maxScrollLeft - 10) {
                         servicesContainer.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
@@ -2012,82 +2174,36 @@
                     }
                 };
 
-                servicesNextBtn.addEventListener('click', () => {
-                    scrollToNext();
-                    resetAutoplay();
-                });
+                servicesNextBtn.addEventListener('click', () => { scrollToNext(); resetAutoplay(); });
+                servicesPrevBtn.addEventListener('click', () => { scrollToPrev(); resetAutoplay(); });
 
-                servicesPrevBtn.addEventListener('click', () => {
-                    scrollToPrev();
-                    resetAutoplay();
-                });
-
-                // Update dots on scroll
-                let isScrolling;
-                servicesContainer.addEventListener('scroll', () => {
-                    window.clearTimeout(isScrolling);
-                    isScrolling = setTimeout(() => {
-                        const cardWidth = getCardWidth();
-                        const activeIndex = Math.min(
-                            servicesDots.length - 1,
-                            Math.max(0, Math.round(servicesContainer.scrollLeft / cardWidth))
-                        );
-                        
-                        servicesDots.forEach((dot, idx) => {
-                            if (idx === activeIndex) {
-                                dot.classList.add('active-dot');
-                                dot.classList.add('bg-spek-accent');
-                            } else {
-                                dot.classList.remove('active-dot');
-                                dot.classList.remove('bg-spek-accent');
-                            }
-                        });
-                    }, 50);
-                });
-
-                // Dots click logic
+                // ── Dots click ───────────────────────────────────────────────────
                 servicesDots.forEach((dot, idx) => {
                     dot.addEventListener('click', () => {
-                        servicesContainer.scrollTo({
-                            left: idx * getCardWidth(),
-                            behavior: 'smooth'
-                        });
+                        servicesContainer.scrollTo({ left: idx * getCardWidth(), behavior: 'smooth' });
                         resetAutoplay();
                     });
                 });
 
-                // Autoplay Logic
+                // ── Autoplay ─────────────────────────────────────────────────────
                 let autoplayInterval;
                 const startAutoplay = () => {
-                    autoplayInterval = setInterval(() => {
-                        scrollToNext();
-                    }, 3500); // 3.5 seconds per slide
+                    autoplayInterval = setInterval(scrollToNext, 3500);
                 };
+                const stopAutoplay = () => clearInterval(autoplayInterval);
+                const resetAutoplay = () => { stopAutoplay(); startAutoplay(); };
 
-                const stopAutoplay = () => {
-                    if (autoplayInterval) {
-                        clearInterval(autoplayInterval);
-                    }
-                };
-
-                const resetAutoplay = () => {
-                    stopAutoplay();
-                    startAutoplay();
-                };
-
-                // Event listeners to pause autoplay when hovered or touched
                 servicesContainer.addEventListener('mouseenter', stopAutoplay);
                 servicesContainer.addEventListener('mouseleave', startAutoplay);
                 servicesContainer.addEventListener('touchstart', stopAutoplay, { passive: true });
-                servicesContainer.addEventListener('touchend', startAutoplay, { passive: true });
-
-                // Also pause if hovering control buttons
+                servicesContainer.addEventListener('touchend',   startAutoplay, { passive: true });
                 servicesPrevBtn.addEventListener('mouseenter', stopAutoplay);
                 servicesPrevBtn.addEventListener('mouseleave', startAutoplay);
                 servicesNextBtn.addEventListener('mouseenter', stopAutoplay);
                 servicesNextBtn.addEventListener('mouseleave', startAutoplay);
 
-                // Start autoplay initially
+                // Init
+                updateActive(0);
                 startAutoplay();
             }
 
