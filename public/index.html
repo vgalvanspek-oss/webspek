@@ -925,7 +925,7 @@
                     <!-- Gallery -->
                     <div class="lg:col-span-8">
                         <!-- Gallery container with horizontal scroll -->
-                        <div id="plc-gallery-scroll" class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth relative"
+                        <div id="plc-gallery-scroll" class="flex gap-4 overflow-x-auto py-10 snap-x snap-mandatory scroll-smooth relative"
                              style="scrollbar-width:thin;scrollbar-color:rgba(255,77,0,0.3) transparent;">
                              <!-- Injected by JS -->
                         </div>
@@ -2003,19 +2003,19 @@
                     const ring = card.querySelector('.plc-ring');
                     
                     if (isActive) {
-                        card.style.transform = 'scale(1.05)';
+                        card.style.transform = 'translateY(-12px) scale(1.08)';
                         card.style.opacity = '1';
                         card.style.zIndex = '10';
                         card.style.borderColor = 'rgba(255, 77, 0, 0.4)';
-                        card.style.boxShadow = '0 20px 40px rgba(255, 77, 0, 0.25)';
+                        card.style.boxShadow = '0 25px 50px -12px rgba(255, 77, 0, 0.45), 0 0 20px rgba(255, 77, 0, 0.2)';
                         if (overlay) overlay.style.opacity = '1';
                         if (ring) {
                             ring.classList.add('ring-1', 'ring-spek-accent/40');
                             ring.classList.remove('ring-0');
                         }
                     } else {
-                        card.style.transform = 'scale(0.95)';
-                        card.style.opacity = '0.45';
+                        card.style.transform = 'translateY(0) scale(0.96)';
+                        card.style.opacity = '0.75';
                         card.style.zIndex = '0';
                         card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
                         card.style.boxShadow = 'none';
