@@ -1974,15 +1974,12 @@
                                    oncontextmenu="return false" controlsList="nodownload" disablePictureInPicture></video>
                                <div class="absolute top-2 right-2 z-10 bg-black/70 text-white text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded border border-white/10">VIDEO</div>`
                             : `<img src="${img.src}" alt="${img.caption}"
-                                   class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy">`;
+                                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">`;
                         
                         html += `
                             <div ${idAttr} ${cardId} class="plc-gallery-card group relative flex-shrink-0 snap-center rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 transition-all duration-500 ease-out h-60 sm:h-80"
                                  onclick="plcOpenLb(${globalIndex})" role="button" tabindex="0" aria-label="${img.caption}" style="aspect-ratio: ${img.aspect || '4/3'}; transform: scale(0.96); opacity: 0.75;">
                                 ${mediaEl}
-                                <div class="plc-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex items-end p-3">
-                                    <span class="text-white text-[11px] leading-tight font-sans">${img.caption}</span>
-                                </div>
                                 <div class="plc-ring absolute inset-0 ring-0 rounded-xl transition-all duration-300 pointer-events-none"></div>
                             </div>
                         `;
