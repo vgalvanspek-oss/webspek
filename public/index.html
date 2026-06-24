@@ -913,6 +913,9 @@
                 <button role="tab" aria-selected="false" data-plc="transportacion" class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
                     Transportación
                 </button>
+                <button role="tab" aria-selected="false" data-plc="proyectof" class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
+                    Proyecto F
+                </button>
             </div>
 
             <!-- Panel content (description + gallery grid) -->
@@ -939,6 +942,7 @@
                                 <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="2">2</button>
                                 <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="3">3</button>
                                 <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="4">4</button>
+                                <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="5">5</button>
                             </div>
                             <button id="plc-slide-next" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:border-spek-accent/50 hover:bg-spek-accent/10 transition-all duration-300" aria-label="Siguiente">
                                 <i data-lucide="chevron-right" class="w-5 h-5 font-bold"></i>
@@ -969,6 +973,10 @@
                 <i data-lucide="chevron-left" class="w-5 h-5"></i>
             </button>
             <img id="plc-lb-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-opacity duration-200" style="max-height:calc(100vh - 180px);">
+            <video id="plc-lb-video" src="" autoplay loop muted playsinline
+                   class="hidden max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                   style="max-height:calc(100vh - 180px);"
+                   oncontextmenu="return false" controlsList="nodownload nofullscreen" disablePictureInPicture></video>
             <button id="plc-lb-next" class="absolute right-4 z-10 w-12 h-12 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white hover:bg-spek-accent hover:border-spek-accent transition-all duration-200" aria-label="Siguiente">
                 <i data-lucide="chevron-right" class="w-5 h-5"></i>
             </button>
@@ -1882,6 +1890,20 @@
                         { src: 'assets/e26.jpg',           caption: 'Cabinas y línea de transportación completa', aspect: '3/4' },
                         { src: 'assets/transportacion.jpg',caption: 'Sistema de transportación monorriel instalado', aspect: '4/3' }
                     ]
+                },
+                proyectof: {
+                    title: 'Proyecto F — Línea Completa',
+                    desc:  'Documentación visual de una línea de pintura completa fabricada e instalada por Spek: desde la estructura metálica y el sistema de transporte hasta la cabina de aplicación, los hornos de curado y los acabados finales. Un proyecto integral llave en mano.',
+                    images: [
+                        { src: 'assets/f1.jpg',  caption: 'Vista general de la línea instalada', aspect: '3/4' },
+                        { src: 'assets/f2.jpg',  caption: 'Estructura metálica y monorriel aéreo', aspect: '3/4' },
+                        { src: 'assets/f3.mp4',  caption: 'Recorrido en video de la línea completa', aspect: '9/16', isVideo: true },
+                        { src: 'assets/f4.jpg',  caption: 'Cabina de pintura electrostática', aspect: '3/4' },
+                        { src: 'assets/f5.jpg',  caption: 'Interior del horno de curado', aspect: '3/4' },
+                        { src: 'assets/f6.jpg',  caption: 'Sistema de transportación en operación', aspect: '3/4' },
+                        { src: 'assets/f7.jpg',  caption: 'Detalle de mecanismo y cadena', aspect: '3/4' },
+                        { src: 'assets/f8.jpg',  caption: 'Vista panorámica de la instalación', aspect: '4/3' }
+                    ]
                 }
             };
 
@@ -1900,13 +1922,15 @@
             const plcLbClose   = document.getElementById('plc-lb-close');
             const plcLbDots    = document.getElementById('plc-lb-dots');
 
+            const plcLbVideo   = document.getElementById('plc-lb-video');
+
             let plcActive = 'hornos';
             let plcLbImages = [];
             let plcLbIdx    = 0;
 
             // Flatten all PLC images for continuous slider and lightbox
             const ALL_PLC_IMAGES = [];
-            const categories = ['pretratamiento', 'hornos', 'cabinas', 'transportacion'];
+            const categories = ['pretratamiento', 'hornos', 'cabinas', 'transportacion', 'proyectof'];
             categories.forEach(catKey => {
                 PLC_DATA[catKey].images.forEach(img => {
                     ALL_PLC_IMAGES.push({
@@ -1954,12 +1978,18 @@
                         const isFirstOfPkg = imgIdx === 0;
                         const idAttr = isFirstOfPkg ? `id="plc-pkg-${catIdx + 1}"` : '';
                         const cardId = img.src.includes('e19') ? 'id="plc-card-e19"' : '';
+                        const mediaEl = img.isVideo
+                            ? `<video src="${img.src}" autoplay loop muted playsinline
+                                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                   oncontextmenu="return false" controlsList="nodownload" disablePictureInPicture></video>
+                               <div class="absolute top-2 right-2 z-10 bg-black/70 text-white text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded border border-white/10">VIDEO</div>`
+                            : `<img src="${img.src}" alt="${img.caption}"
+                                   class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy">`;
                         
                         html += `
                             <div ${idAttr} ${cardId} class="plc-gallery-card group relative flex-shrink-0 snap-center rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 transition-all duration-500 ease-out h-60 sm:h-80"
                                  onclick="plcOpenLb(${globalIndex})" role="button" tabindex="0" aria-label="${img.caption}" style="aspect-ratio: ${img.aspect || '4/3'}; transform: scale(0.96); opacity: 0.75;">
-                                <img src="${img.src}" alt="${img.caption}"
-                                     class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                                ${mediaEl}
                                 <div class="plc-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex items-end p-3">
                                     <span class="text-white text-[11px] leading-tight font-sans">${img.caption}</span>
                                 </div>
@@ -2143,20 +2173,36 @@
                 plcLbOverlay.classList.add('opacity-0','pointer-events-none');
                 plcLbOverlay.classList.remove('opacity-100');
                 document.body.style.overflow = '';
+                // Pause any playing lightbox video
+                if (plcLbVideo) { plcLbVideo.pause(); plcLbVideo.src = ''; }
             }
 
             function plcGoTo(idx) {
                 plcLbIdx = (idx + plcLbImages.length) % plcLbImages.length;
                 const item = plcLbImages[plcLbIdx];
                 plcLbTitle.textContent = item.categoryTitle;
-                plcLbImg.style.opacity = '0';
-                setTimeout(() => {
-                    plcLbImg.src = item.src;
-                    plcLbImg.alt = item.caption;
-                    plcLbCaption.textContent = item.caption;
-                    plcLbCounter.textContent = `${plcLbIdx + 1} / ${plcLbImages.length}`;
-                    plcLbImg.style.opacity = '1';
-                }, 180);
+                plcLbCaption.textContent = item.caption;
+                plcLbCounter.textContent = `${plcLbIdx + 1} / ${plcLbImages.length}`;
+
+                if (item.isVideo) {
+                    // Show video, hide img
+                    plcLbImg.classList.add('hidden');
+                    plcLbVideo.classList.remove('hidden');
+                    plcLbVideo.src = item.src;
+                    plcLbVideo.load();
+                    plcLbVideo.play().catch(() => {});
+                } else {
+                    // Show img, hide video
+                    plcLbVideo.pause();
+                    plcLbVideo.classList.add('hidden');
+                    plcLbImg.classList.remove('hidden');
+                    plcLbImg.style.opacity = '0';
+                    setTimeout(() => {
+                        plcLbImg.src = item.src;
+                        plcLbImg.alt = item.caption;
+                        plcLbImg.style.opacity = '1';
+                    }, 180);
+                }
                 // dots
                 plcLbDots.innerHTML = plcLbImages.map((_, i) =>
                     `<button class="w-2 h-2 rounded-full transition-all duration-300 ${i === plcLbIdx ? 'bg-spek-accent scale-125' : 'bg-white/30'}" onclick="plcGoTo(${i})" aria-label="Imagen ${i+1}"></button>`
