@@ -913,9 +913,6 @@
                 <button role="tab" aria-selected="false" data-plc="transportacion" class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
                     Transportación
                 </button>
-                <button role="tab" aria-selected="false" data-plc="proyectof" class="plc-tab px-5 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300">
-                    Proyecto F
-                </button>
             </div>
 
             <!-- Panel content (description + gallery grid) -->
@@ -942,7 +939,6 @@
                                 <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="2">2</button>
                                 <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="3">3</button>
                                 <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="4">4</button>
-                                <button class="plc-pkg-btn px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 border-white/10 text-gray-400 hover:border-white/30 hover:text-white bg-transparent" data-pkg="5">5</button>
                             </div>
                             <button id="plc-slide-next" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:border-spek-accent/50 hover:bg-spek-accent/10 transition-all duration-300" aria-label="Siguiente">
                                 <i data-lucide="chevron-right" class="w-5 h-5 font-bold"></i>
@@ -1854,11 +1850,19 @@
                     title: 'Pretratamiento Químico',
                     desc:  'Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura. Fabricados en acero inoxidable 304, con boquillas de clip rápido y colectores de escurrimiento.',
                     images: [
+                        { src: 'assets/f3.mp4',            caption: 'Línea completa en operación — recorrido en video', aspect: '9/16', isVideo: true },
+                        { src: 'assets/f1.jpg',            caption: 'Vista general de la línea instalada', aspect: '3/4' },
+                        { src: 'assets/f2.jpg',            caption: 'Estructura metálica y monorriel aéreo', aspect: '3/4' },
+                        { src: 'assets/f4.jpg',            caption: 'Cabina de pintura electrostática', aspect: '3/4' },
+                        { src: 'assets/f5.jpg',            caption: 'Interior del horno de curado', aspect: '3/4' },
+                        { src: 'assets/f6.jpg',            caption: 'Sistema de transportación en operación', aspect: '3/4' },
+                        { src: 'assets/f7.jpg',            caption: 'Detalle de mecanismo y cadena', aspect: '3/4' },
+                        { src: 'assets/f8.jpg',            caption: 'Vista panorámica de la instalación', aspect: '4/3' },
                         { src: 'assets/e13.jpg',           caption: 'Interior de túnel de aspersión multi-etapa', aspect: '3/4' },
                         { src: 'assets/e21.jpg',           caption: 'Sistema de boquillas de aspersión', aspect: '3/4' },
                         { src: 'assets/e23.jpg',           caption: 'Interior con boquillas clip rápido', aspect: '3/4' },
                         { src: 'assets/e14.jpg',           caption: 'Servicio y carga química en tina de inmersión', aspect: '3/4' },
-                        { src: 'assets/pretratamiento.jpg',caption: 'Túnel de pretratamiento instalado', aspect: '4/3' }
+                        { src: 'assets/pretratamiento.jpg',caption: 'Túnal de pretratamiento instalado', aspect: '4/3' }
                     ]
                 },
                 hornos: {
@@ -1890,20 +1894,6 @@
                         { src: 'assets/e26.jpg',           caption: 'Cabinas y línea de transportación completa', aspect: '3/4' },
                         { src: 'assets/transportacion.jpg',caption: 'Sistema de transportación monorriel instalado', aspect: '4/3' }
                     ]
-                },
-                proyectof: {
-                    title: 'Proyecto F — Línea Completa',
-                    desc:  'Documentación visual de una línea de pintura completa fabricada e instalada por Spek: desde la estructura metálica y el sistema de transporte hasta la cabina de aplicación, los hornos de curado y los acabados finales. Un proyecto integral llave en mano.',
-                    images: [
-                        { src: 'assets/f1.jpg',  caption: 'Vista general de la línea instalada', aspect: '3/4' },
-                        { src: 'assets/f2.jpg',  caption: 'Estructura metálica y monorriel aéreo', aspect: '3/4' },
-                        { src: 'assets/f3.mp4',  caption: 'Recorrido en video de la línea completa', aspect: '9/16', isVideo: true },
-                        { src: 'assets/f4.jpg',  caption: 'Cabina de pintura electrostática', aspect: '3/4' },
-                        { src: 'assets/f5.jpg',  caption: 'Interior del horno de curado', aspect: '3/4' },
-                        { src: 'assets/f6.jpg',  caption: 'Sistema de transportación en operación', aspect: '3/4' },
-                        { src: 'assets/f7.jpg',  caption: 'Detalle de mecanismo y cadena', aspect: '3/4' },
-                        { src: 'assets/f8.jpg',  caption: 'Vista panorámica de la instalación', aspect: '4/3' }
-                    ]
                 }
             };
 
@@ -1930,7 +1920,7 @@
 
             // Flatten all PLC images for continuous slider and lightbox
             const ALL_PLC_IMAGES = [];
-            const categories = ['pretratamiento', 'hornos', 'cabinas', 'transportacion', 'proyectof'];
+            const categories = ['pretratamiento', 'hornos', 'cabinas', 'transportacion'];
             categories.forEach(catKey => {
                 PLC_DATA[catKey].images.forEach(img => {
                     ALL_PLC_IMAGES.push({
@@ -1977,7 +1967,7 @@
                     catData.images.forEach((img, imgIdx) => {
                         const isFirstOfPkg = imgIdx === 0;
                         const idAttr = isFirstOfPkg ? `id="plc-pkg-${catIdx + 1}"` : '';
-                        const cardId = img.src.includes('e19') ? 'id="plc-card-e19"' : '';
+                        const cardId = img.src.includes('f3.mp4') ? 'id="plc-card-f3"' : '';
                         const mediaEl = img.isVideo
                             ? `<video src="${img.src}" autoplay loop muted playsinline
                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -2058,27 +2048,23 @@
                 });
             }
 
-            // ── Scroll to center e19.jpg on load ──
+            // ── Scroll to center f3.mp4 video on load ──
             function plcScrollToE19() {
-                const e19Card = document.getElementById('plc-card-e19');
-                if (!e19Card || !plcGalleryScroll) return;
+                const f3Card = document.getElementById('plc-card-f3');
+                if (!f3Card || !plcGalleryScroll) return;
                 
                 const performScroll = () => {
-                    const targetScroll = e19Card.offsetLeft - (plcGalleryScroll.clientWidth - e19Card.clientWidth) / 2;
+                    const targetScroll = f3Card.offsetLeft - (plcGalleryScroll.clientWidth - f3Card.clientWidth) / 2;
                     plcGalleryScroll.scrollTo({
                         left: targetScroll,
-                        behavior: 'auto' // instant scroll
+                        behavior: 'auto'
                     });
                     updateFeaturedImageOnScroll();
                 };
                 
-                // Try instantly
                 performScroll();
-                
-                // Try on window load when all assets are loaded
                 window.addEventListener('load', performScroll);
                 
-                // Poll a few times during first 1.5 seconds in case of slow image loads/layout shifts
                 let count = 0;
                 const interval = setInterval(() => {
                     performScroll();
