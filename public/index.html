@@ -1846,41 +1846,41 @@
                     title: 'Pretratamiento Químico',
                     desc:  'Los túneles de lavado por aspersión y tinas de inmersión de Spek están diseñados para realizar un desengrase profundo, decapado y fosfatizado del metal, eliminando cualquier impureza física o química previa a la aplicación de pintura. Fabricados en acero inoxidable 304, con boquillas de clip rápido y colectores de escurrimiento.',
                     images: [
-                        { src: 'assets/e13.jpg',           caption: 'Interior de túnel de aspersión multi-etapa' },
-                        { src: 'assets/e21.jpg',           caption: 'Sistema de boquillas de aspersión' },
-                        { src: 'assets/e23.jpg',           caption: 'Interior con boquillas clip rápido' },
-                        { src: 'assets/e14.jpg',           caption: 'Servicio y carga química en tina de inmersión' },
-                        { src: 'assets/pretratamiento.jpg',caption: 'Túnel de pretratamiento instalado' }
+                        { src: 'assets/e13.jpg',           caption: 'Interior de túnel de aspersión multi-etapa', aspect: '3/4' },
+                        { src: 'assets/e21.jpg',           caption: 'Sistema de boquillas de aspersión', aspect: '3/4' },
+                        { src: 'assets/e23.jpg',           caption: 'Interior con boquillas clip rápido', aspect: '3/4' },
+                        { src: 'assets/e14.jpg',           caption: 'Servicio y carga química en tina de inmersión', aspect: '3/4' },
+                        { src: 'assets/pretratamiento.jpg',caption: 'Túnel de pretratamiento instalado', aspect: '4/3' }
                     ]
                 },
                 hornos: {
                     title: 'Hornos de Curado y Secado',
                     desc:  'Nuestros hornos industriales de convección ofrecen un flujo de aire dinámico y uniforme de recirculación, asegurando que la pintura alcance su temperatura de curado ideal sin variaciones ni pérdidas térmicas. Temperatura hasta 250 °C, quemador a gas modulante, aislamiento de lana mineral 6".',
                     images: [
-                        { src: 'assets/e16.jpg',           caption: 'Horno vertical con estructura naranja y bastidores' },
-                        { src: 'assets/e19.jpg',           caption: 'Horno de curado con cadena y bastidores internos' },
-                        { src: 'assets/e20.jpg',           caption: 'Horno de curado con ventilación lateral y cadena' },
-                        { src: 'assets/e22.jpg',           caption: 'Tren de hornos y cabina en línea' },
-                        { src: 'assets/hornos.jpg',        caption: 'Horno de curado instalado en planta' },
-                        { src: 'assets/spek_descarga.png', caption: 'Zona de descarga con control de temperatura' }
+                        { src: 'assets/e16.jpg',           caption: 'Horno vertical con estructura naranja y bastidores', aspect: '3/4' },
+                        { src: 'assets/e19.jpg',           caption: 'Horno de curado con cadena y bastidores internos', aspect: '3/4' },
+                        { src: 'assets/e20.jpg',           caption: 'Horno de curado con ventilación lateral y cadena', aspect: '3/4' },
+                        { src: 'assets/e22.jpg',           caption: 'Tren de hornos y cabina en línea', aspect: '3/4' },
+                        { src: 'assets/hornos.jpg',        caption: 'Horno de curado instalado en planta', aspect: '4/3' },
+                        { src: 'assets/spek_descarga.png', caption: 'Zona de descarga con control de temperatura', aspect: '4/3' }
                     ]
                 },
                 cabinas: {
                     title: 'Cabinas de Aplicación',
                     desc:  'Fabricamos cabinas de aplicación presurizadas y controladas. Para pintura electrostática incorporamos colectores de cartucho y ciclones de recuperación (99.7 % eficiencia), y cascada de agua para pintura líquida. Cumplen norma ATEX / NFPA con cambio rápido de color.',
                     images: [
-                        { src: 'assets/e15.jpg',           caption: 'Interior de horno — vista técnica del ingeniero Spek' },
-                        { src: 'assets/e27.jpg',           caption: 'Inspección de cabina por personal Spek' },
-                        { src: 'assets/cabinas.jpg',       caption: 'Cabina de pintura electrostática instalada' }
+                        { src: 'assets/e15.jpg',           caption: 'Interior de horno — vista técnica del ingeniero Spek', aspect: '3/4' },
+                        { src: 'assets/e27.jpg',           caption: 'Inspección de cabina por personal Spek', aspect: '3/4' },
+                        { src: 'assets/cabinas.jpg',       caption: 'Cabina de pintura electrostática instalada', aspect: '4/3' }
                     ]
                 },
                 transportacion: {
                     title: 'Sistemas de Transportación',
                     desc:  'La continuidad de la línea depende del transportador. Diseñamos circuitos monorrieles aéreos continuos de alta resistencia (cadenas X348 / X458) y transportadores sobre suelo automatizados con variador VFD y lubricación automática neumática.',
                     images: [
-                        { src: 'assets/e25.jpg',           caption: 'Monorriel aéreo con cadena sobre horno y cabina' },
-                        { src: 'assets/e26.jpg',           caption: 'Cabinas y línea de transportación completa' },
-                        { src: 'assets/transportacion.jpg',caption: 'Sistema de transportación monorriel instalado' }
+                        { src: 'assets/e25.jpg',           caption: 'Monorriel aéreo con cadena sobre horno y cabina', aspect: '3/4' },
+                        { src: 'assets/e26.jpg',           caption: 'Cabinas y línea de transportación completa', aspect: '3/4' },
+                        { src: 'assets/transportacion.jpg',caption: 'Sistema de transportación monorriel instalado', aspect: '4/3' }
                     ]
                 }
             };
@@ -1956,10 +1956,10 @@
                         const cardId = img.src.includes('e19') ? 'id="plc-card-e19"' : '';
                         
                         html += `
-                            <div ${idAttr} ${cardId} class="plc-gallery-card group relative flex-shrink-0 snap-center rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 transition-all duration-500 ease-out"
-                                 onclick="plcOpenLb(${globalIndex})" role="button" tabindex="0" aria-label="${img.caption}" style="transform: scale(0.95); opacity: 0.45;">
+                            <div ${idAttr} ${cardId} class="plc-gallery-card group relative flex-shrink-0 snap-center rounded-xl overflow-hidden cursor-pointer bg-[#111] border border-white/5 transition-all duration-500 ease-out h-60 sm:h-80"
+                                 onclick="plcOpenLb(${globalIndex})" role="button" tabindex="0" aria-label="${img.caption}" style="aspect-ratio: ${img.aspect || '4/3'}; transform: scale(0.96); opacity: 0.75;">
                                 <img src="${img.src}" alt="${img.caption}"
-                                     class="h-60 sm:h-80 w-auto block transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                                     class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy">
                                 <div class="plc-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex items-end p-3">
                                     <span class="text-white text-[11px] leading-tight font-sans">${img.caption}</span>
                                 </div>
